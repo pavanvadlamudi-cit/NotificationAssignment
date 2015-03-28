@@ -1,0 +1,120 @@
+package ie.cit.afd.dao;
+
+import ie.cit.afd.notification.models.NotificationTypes;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.UUID;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
+
+
+@Component
+public class JdbcNotificationTypesRepository implements
+		NotificationTypesRepository {
+	private JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	public JdbcNotificationTypesRepository(DataSource dataSource) {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+
+	public void insert(NotificationTypes notificationTypes) {
+		jdbcTemplate.update("insert into  notificationtypes"
+				+ "(notificationtypeid,name,code,status) " + " values (?,?,?,?)",
+				UUID.randomUUID(),
+				notificationTypes.getName(), 
+				notificationTypes.getCode(),
+				notificationTypes.isStatus());
+
+	}
+
+	public void update(NotificationTypes notificationTypes) {
+		jdbcTemplate.update("update notificationtypes "
+				+ "set name=?, "
+				+ " code=?, "
+				+ " status=? "
+				+ " where notificationtypeid=?"
+				,			
+				notificationTypes.getName(), 
+				notificationTypes.getCode(),
+				notificationTypes.isStatus(),
+				notificationTypes.getNotificationTypeID());
+
+
+	}
+
+	public void delete(NotificationTypes notificationTypes) {
+		jdbcTemplate.update("delete from notificatintypes where notificationtypeid=?",notificationTypes.getNotificationTypeID());
+
+	}
+
+	public List<NotificationTypes> getAll() {
+		return jdbcTemplate.query("select notificationtypeid,name,code,status"
+				+ " from notificationtypes", new NotificationTypesRowMapper());
+
+	}
+
+	public NotificationTypes findBycode(String code) {
+		
+		String sql = "select notificationtypeid,name,code,status"
+				+ " from notificationtypes where code=?";
+		try{
+		NotificationTypes notificationTypes;
+		notificationTypes =(NotificationTypes) jdbcTemplate.queryForObject(
+				sql, new Object[] { code }, new NotificationTypesSingleRowMapper());
+		
+		return notificationTypes;
+		}
+		
+		catch(EmptyResultDataAccessException e){
+			return null;
+		}
+	}
+
+	
+}
+
+class NotificationTypesSingleRowMapper implements RowMapper
+{
+	public NotificationTypes mapRow(ResultSet rs, int rowNum) throws SQLException {
+		String notificationTypeID = rs.getString("notificationtypeid");
+		String name = rs.getString("name");
+		String code = rs.getString("code");
+		Boolean status = rs.getBoolean("status");
+
+		NotificationTypes notificationTypes = new NotificationTypes();
+		notificationTypes.setNotificationTypeID(notificationTypeID);
+		notificationTypes.setName(name);
+		notificationTypes.setStatus(status);
+		notificationTypes.setCode(code);
+
+		return notificationTypes;
+	}
+ 
+}
+class NotificationTypesRowMapper implements RowMapper<NotificationTypes> {
+
+	public NotificationTypes mapRow(ResultSet rs, int arg1) throws SQLException {
+
+		String notificationTypeID = rs.getString("notificationtypeid");
+		String name = rs.getString("name");
+		String code = rs.getString("code");
+		Boolean status = rs.getBoolean("status");
+
+		NotificationTypes notificationTypes = new NotificationTypes();
+		notificationTypes.setNotificationTypeID(notificationTypeID);
+		notificationTypes.setName(name);
+		notificationTypes.setStatus(status);
+		notificationTypes.setCode(code);
+
+		return notificationTypes;
+	}
+}
