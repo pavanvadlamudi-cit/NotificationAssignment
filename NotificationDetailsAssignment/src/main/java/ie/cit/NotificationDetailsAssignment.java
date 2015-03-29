@@ -1,11 +1,11 @@
 package ie.cit;
-import java.io.Console;
+
 import java.util.List;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ie.cit.afd.dao.*;
-import ie.cit.afd.notification.models.*;
+import ie.cit.afd.models.*;
 
 public class NotificationDetailsAssignment {
 

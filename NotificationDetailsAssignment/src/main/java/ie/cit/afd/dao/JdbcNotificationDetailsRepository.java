@@ -1,6 +1,6 @@
 package ie.cit.afd.dao;
 
-import ie.cit.afd.notification.models.NotificationDetails;
+import ie.cit.afd.models.NotificationDetails;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +23,10 @@ public class JdbcNotificationDetailsRepository implements
 	@Autowired
 	public JdbcNotificationDetailsRepository(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+
+	public JdbcNotificationDetailsRepository() {
+		
 	}
 
 	public void insert(NotificationDetails notificationDetails) {

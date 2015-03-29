@@ -1,7 +1,7 @@
 package ie.cit.afd.dao;
 
 
-import ie.cit.afd.notification.models.OrganisationDetails;
+import ie.cit.afd.models.OrganisationDetails;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

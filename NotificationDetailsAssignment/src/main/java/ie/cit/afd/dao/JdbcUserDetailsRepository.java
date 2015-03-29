@@ -1,6 +1,6 @@
 package ie.cit.afd.dao;
 
-import ie.cit.afd.notification.models.UserDetails;
+import ie.cit.afd.models.UserDetails;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

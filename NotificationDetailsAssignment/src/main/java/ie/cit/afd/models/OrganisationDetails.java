@@ -1,4 +1,4 @@
-package ie.cit.afd.notification.models;
+package ie.cit.afd.models;
 
 public class OrganisationDetails {
 	String OrganisationDetailsID;
