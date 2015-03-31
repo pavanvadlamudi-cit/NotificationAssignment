@@ -63,7 +63,15 @@ public class NotificationTypesController {
 		return "redirect:all";
 	}
 	
-	private String getLocationForTodoResource(NotificationTypes notificationType,
+	// REST end-points
+		// curl http://localhost:8080/todo-app/todo/
+		@RequestMapping(value = { "/notificationtypes/all", "/notificationtypes" }, method = RequestMethod.GET, produces = "application/json")
+		@ResponseStatus(HttpStatus.OK)
+		public @ResponseBody List<NotificationTypes> getAllNotificationTypeItems() {
+			return ntrepo.getAll();
+		}
+	
+	private String getLocationForNotificationTypesResource(NotificationTypes notificationType,
 			HttpServletRequest request) {
 		StringBuffer url = request.getRequestURL();
 		UriTemplate template = new UriTemplate(url.append("/{childId}")
