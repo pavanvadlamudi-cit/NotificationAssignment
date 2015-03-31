@@ -1,4 +1,4 @@
-package ie.cit.adf.web;
+package ie.cit.afd.web;
 import ie.cit.afd.dao.NotificationTypesRepository;
 import ie.cit.afd.models.NotificationTypes;
 
