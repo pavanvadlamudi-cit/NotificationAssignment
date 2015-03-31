@@ -10,8 +10,11 @@ public interface OrganisationDetailsRepository {
 	void update(OrganisationDetails organisationdetails);
 
 	void delete(OrganisationDetails organisationdetails);
+
 	void delete(String id);
+
 	OrganisationDetails findByname(String name);
+
 	OrganisationDetails findById(String id);
 
 	List<OrganisationDetails> getAll();

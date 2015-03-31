@@ -1,6 +1,8 @@
 package ie.cit.afd.web;
+
 import ie.cit.afd.dao.NotificationDetailsRepository;
 import ie.cit.afd.models.NotificationDetails;
+import ie.cit.afd.models.NotificationTypes;
 
 import java.util.List;
 import java.util.Map;
@@ -26,21 +28,24 @@ import org.springframework.web.util.UriTemplate;
 @Controller
 public class NotificationDetailsController {
 	private NotificationDetailsRepository ntdrepo;
+
 	@Autowired
 	public NotificationDetailsController(NotificationDetailsRepository ntdrepo) {
 		this.ntdrepo = ntdrepo;
 	}
 
-	@RequestMapping(value = {"/notificationdetails","/notificationdetails/all"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/notificationdetails",
+			"/notificationdetails/all" }, method = RequestMethod.GET)
 	public String getAll(Model model) {
 		model.addAttribute("notificationdetails", ntdrepo.getAll());
 		return "notificationdetails";
 	}
-	
 
 	@RequestMapping(value = "/notificationdetails", method = RequestMethod.POST)
-	public String create(@RequestParam String notificationTypeID,@RequestParam String organisationdetailsID,@RequestParam String details) {
-		
+	public String create(@RequestParam String notificationTypeID,
+			@RequestParam String organisationdetailsID,
+			@RequestParam String details) {
+
 		NotificationDetails notificationDetails = new NotificationDetails();
 		notificationDetails.setNotificationTypeID(notificationTypeID);
 		notificationDetails.setOrganisationdetailsID(organisationdetailsID);
@@ -57,9 +62,12 @@ public class NotificationDetailsController {
 	}
 
 	@RequestMapping(value = "{notificationDetailsID}", method = RequestMethod.PUT)
-	public String update(@RequestParam String id,@RequestParam String notificationTypeID,@RequestParam String organisationdetailsID,@RequestParam String details) {
+	public String update(@RequestParam String id,
+			@RequestParam String notificationTypeID,
+			@RequestParam String organisationdetailsID,
+			@RequestParam String details) {
 		NotificationDetails notificationDetails = ntdrepo.findById(id);
-		if (notificationDetails!=null){
+		if (notificationDetails != null) {
 			notificationDetails.setNotificationTypeID(notificationTypeID);
 			notificationDetails.setOrganisationdetailsID(organisationdetailsID);
 			notificationDetails.setDetails(details);
@@ -68,13 +76,21 @@ public class NotificationDetailsController {
 		}
 		return "redirect:all";
 	}
-	
-	private String getLocationForNotificationDetailsResource(NotificationDetails notificationDetails,
-			HttpServletRequest request) {
+	// REST end-points
+		// curl
+		// http://localhost:8081/NotificationDetailsAssignment/Notification/notificationtypes
+		@RequestMapping(value = { "/notificationdetails/all", "/notificationdetails" }, method = RequestMethod.GET, produces = "application/json")
+		@ResponseStatus(HttpStatus.OK)
+		public @ResponseBody List<NotificationDetails> getAllNotificationDetailsItems() {
+			return ntdrepo.getAll();
+		}
+	private String getLocationForNotificationDetailsResource(
+			NotificationDetails notificationDetails, HttpServletRequest request) {
 		StringBuffer url = request.getRequestURL();
 		UriTemplate template = new UriTemplate(url.append("/{childId}")
 				.toString());
-		return template.expand(notificationDetails.getNotificationDetailsID(), template).toASCIIString();
+		return template.expand(notificationDetails.getNotificationDetailsID(),
+				template).toASCIIString();
 	}
 
 	// Exception handler for findById if "Todo" item does not exist in repo

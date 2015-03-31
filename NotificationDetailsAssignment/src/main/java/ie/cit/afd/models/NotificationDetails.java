@@ -12,7 +12,7 @@ public class NotificationDetails {
 	}
 
 	public void setNotificationDetailsID(String notificationDetailsID) {
-	   this.notificationDetailsID = notificationDetailsID;
+		this.notificationDetailsID = notificationDetailsID;
 	}
 
 	public String getNotificationTypeID() {
@@ -30,7 +30,7 @@ public class NotificationDetails {
 	public void setOrganisationdetailsID(String organisationdetailsID) {
 		this.organisationdetailsID = organisationdetailsID;
 	}
-	
+
 	public String getDetails() {
 		return details;
 	}

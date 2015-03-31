@@ -10,8 +10,9 @@ public interface NotificationDetailsRepository {
 	void update(NotificationDetails notificationdetails);
 
 	void delete(NotificationDetails notificationdetails);
+
 	void delete(String id);
-	
+
 	NotificationDetails findById(String notificationDetailsId);
 
 	List<NotificationDetails> getAll();

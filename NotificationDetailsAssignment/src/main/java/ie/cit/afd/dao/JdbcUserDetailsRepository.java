@@ -25,45 +25,37 @@ public class JdbcUserDetailsRepository implements UserDetailsRepository {
 	}
 
 	public void insert(UserDetails userDetails) {
-		
-		jdbcTemplate.update("insert into "
+
+		jdbcTemplate
+				.update("insert into "
 						+ "userdetails"
 						+ "(userdetailsid,  username,  password,  organisationdetailsid,  status) "
-						+ " values (?,?,?,?,?)", 
-						UUID.randomUUID(),
+						+ " values (?,?,?,?,?)", UUID.randomUUID(),
 						userDetails.getUsername(), userDetails.getPassword(),
 						userDetails.getOrganisationDetailsID(),
 						userDetails.isStatus());
 	}
 
 	public void update(UserDetails userDetails) {
-		jdbcTemplate.update("update "
-				+ "userdetails "
-				+ " set username=?,"
-				+ " password=?,"
-				+ " organisationdetailsid=?,"
-				+ " status=?"
-				+ " where userdetailsid=?"
-				, 
-				
-				userDetails.getUsername(), userDetails.getPassword(),
-				userDetails.getOrganisationDetailsID(),
-				userDetails.isStatus(),
+		jdbcTemplate.update("update " + "userdetails " + " set username=?,"
+				+ " password=?," + " organisationdetailsid=?," + " status=?"
+				+ " where userdetailsid=?",
+
+		userDetails.getUsername(), userDetails.getPassword(),
+				userDetails.getOrganisationDetailsID(), userDetails.isStatus(),
 				userDetails.getUserDetailsID());
 
 	}
 
 	public void delete(UserDetails userDetails) {
-		jdbcTemplate.update("delete "
-				+ "from userdetails "
-				+ "where userdetailsid=?"
-				, 
-				userDetails.getUserDetailsID());
+		jdbcTemplate.update("delete " + "from userdetails "
+				+ "where userdetailsid=?", userDetails.getUserDetailsID());
 
 	}
 
 	public List<UserDetails> getAll() {
-		return jdbcTemplate.query("select "
+		return jdbcTemplate
+				.query("select "
 						+ "userdetailsid,  username,  password,  organisationdetailsid,  status"
 						+ " from userdetails", new UserDetailsRowMapper());
 
@@ -72,47 +64,45 @@ public class JdbcUserDetailsRepository implements UserDetailsRepository {
 	public UserDetails findByusername(String username) {
 		String sql = "select userdetailsid,  username,  password,  organisationdetailsid,  status "
 				+ " from userdetails where username=?";
-		try{
+		try {
 			UserDetails userDetails;
-			userDetails =(UserDetails) jdbcTemplate.queryForObject(
-				sql, new Object[] { username }, new UserDetailsSingleRowMapper());
-		
-		return userDetails;
+			userDetails = (UserDetails) jdbcTemplate
+					.queryForObject(sql, new Object[] { username },
+							new UserDetailsSingleRowMapper());
+
+			return userDetails;
 		}
-		
-		catch(EmptyResultDataAccessException e){
+
+		catch (EmptyResultDataAccessException e) {
 			return null;
 		}
-		
+
 	}
 
 	public void delete(String id) {
-		jdbcTemplate.update("delete "
-				+ "from userdetails "
-				+ "where userdetailsid=?"
-				, 
-				id);
-		
+		jdbcTemplate.update("delete " + "from userdetails "
+				+ "where userdetailsid=?", id);
+
 	}
 
 	public UserDetails findById(String id) {
 		String sql = "select userdetailsid,  username,  password,  organisationdetailsid,  status "
 				+ " from userdetails where userdetailsid=?";
-		try{
+		try {
 			UserDetails userDetails;
-			userDetails =(UserDetails) jdbcTemplate.queryForObject(
-				sql, new Object[] { id }, new UserDetailsSingleRowMapper());
-		
-		return userDetails;
+			userDetails = (UserDetails) jdbcTemplate.queryForObject(sql,
+					new Object[] { id }, new UserDetailsSingleRowMapper());
+
+			return userDetails;
 		}
-		
-		catch(EmptyResultDataAccessException e){
+
+		catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
 }
 
-class UserDetailsSingleRowMapper implements RowMapper{
+class UserDetailsSingleRowMapper implements RowMapper {
 
 	public UserDetails mapRow(ResultSet rs, int arg1) throws SQLException {
 

@@ -1,6 +1,5 @@
 package ie.cit.afd.dao;
 
-
 import ie.cit.afd.models.OrganisationDetails;
 
 import java.sql.ResultSet;
@@ -27,53 +26,47 @@ public class JdbcOrganisationDetailsRepository implements
 	}
 
 	public void insert(OrganisationDetails organisationDetails) {
-		jdbcTemplate.update(
-				"insert into  organisationdetails"
-						+ "(organisationdetailsid,  name,  status) "
-						+ " values (?,?,?)",
-						UUID.randomUUID(),
-				organisationDetails.getName(), 
-				organisationDetails.isStatus());
+		jdbcTemplate.update("insert into  organisationdetails"
+				+ "(organisationdetailsid,  name,  status) "
+				+ " values (?,?,?)", UUID.randomUUID(),
+				organisationDetails.getName(), organisationDetails.isStatus());
 
 	}
 
 	public void update(OrganisationDetails organisationDetails) {
-		jdbcTemplate.update(
-				"update organisationdetails "
-						+ "set  name=?,  "
-						+ " status=? "
-						+ "where organisationdetailsid=?",
-				
-				organisationDetails.getName(), organisationDetails.isStatus(),
-				organisationDetails.getOrganisationDetailsID());
+		jdbcTemplate.update("update organisationdetails " + "set  name=?,  "
+				+ " status=? " + "where organisationdetailsid=?",
 
+		organisationDetails.getName(), organisationDetails.isStatus(),
+				organisationDetails.getOrganisationDetailsID());
 
 	}
 
 	public void delete(OrganisationDetails organisationDetails) {
-		jdbcTemplate.update(
-				"delete from organisationdetails "
-						+ " where organisationdetailsid=?",
+		jdbcTemplate.update("delete from organisationdetails "
+				+ " where organisationdetailsid=?",
 				organisationDetails.getOrganisationDetailsID());
 
 	}
-	
+
 	public OrganisationDetails findByname(String name) {
-		
+
 		String sql = "select organisationdetailsid,  name,  status "
 				+ " from organisationdetails where name=?";
-		try{
+		try {
 			OrganisationDetails organisationDetails;
-			organisationDetails =(OrganisationDetails) jdbcTemplate.queryForObject(
-				sql, new Object[] { name }, new OrganisationDetailsSingleRowMapper());
-		
-		return organisationDetails;
+			organisationDetails = (OrganisationDetails) jdbcTemplate
+					.queryForObject(sql, new Object[] { name },
+							new OrganisationDetailsSingleRowMapper());
+
+			return organisationDetails;
 		}
-		
-		catch(EmptyResultDataAccessException e){
+
+		catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
+
 	public List<OrganisationDetails> getAll() {
 		return jdbcTemplate.query(
 				"select organisationdetailsid,  name,  status"
@@ -82,25 +75,24 @@ public class JdbcOrganisationDetailsRepository implements
 	}
 
 	public void delete(String id) {
-		jdbcTemplate.update(
-				"delete from organisationdetails "
-						+ " where organisationdetailsid=?",
-						id);
-		
+		jdbcTemplate.update("delete from organisationdetails "
+				+ " where organisationdetailsid=?", id);
+
 	}
 
 	public OrganisationDetails findById(String id) {
 		String sql = "select organisationdetailsid,  name,  status "
 				+ " from organisationdetails where organisationdetailsid=?";
-		try{
+		try {
 			OrganisationDetails organisationDetails;
-			organisationDetails =(OrganisationDetails) jdbcTemplate.queryForObject(
-				sql, new Object[] { id }, new OrganisationDetailsSingleRowMapper());
-		
-		return organisationDetails;
+			organisationDetails = (OrganisationDetails) jdbcTemplate
+					.queryForObject(sql, new Object[] { id },
+							new OrganisationDetailsSingleRowMapper());
+
+			return organisationDetails;
 		}
-		
-		catch(EmptyResultDataAccessException e){
+
+		catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
@@ -111,9 +103,9 @@ class OrganisationDetailsSingleRowMapper implements RowMapper {
 	public OrganisationDetails mapRow(ResultSet rs, int arg1)
 			throws SQLException {
 
-		String organisationDetailsID=rs.getString("organisationdetailsid");
-		String name=rs.getString("name");
-		Boolean status=rs.getBoolean("status");
+		String organisationDetailsID = rs.getString("organisationdetailsid");
+		String name = rs.getString("name");
+		Boolean status = rs.getBoolean("status");
 
 		OrganisationDetails organisationDetails = new OrganisationDetails();
 		organisationDetails.setOrganisationDetailsID(organisationDetailsID);
@@ -123,15 +115,14 @@ class OrganisationDetailsSingleRowMapper implements RowMapper {
 	}
 }
 
-
 class OrganisationDetailsRowMapper implements RowMapper<OrganisationDetails> {
 
 	public OrganisationDetails mapRow(ResultSet rs, int arg1)
 			throws SQLException {
 
-		String organisationDetailsID=rs.getString("organisationdetailsid");
-		String name=rs.getString("name");
-		Boolean status=rs.getBoolean("status");
+		String organisationDetailsID = rs.getString("organisationdetailsid");
+		String name = rs.getString("name");
+		Boolean status = rs.getBoolean("status");
 
 		OrganisationDetails organisationDetails = new OrganisationDetails();
 		organisationDetails.setOrganisationDetailsID(organisationDetailsID);

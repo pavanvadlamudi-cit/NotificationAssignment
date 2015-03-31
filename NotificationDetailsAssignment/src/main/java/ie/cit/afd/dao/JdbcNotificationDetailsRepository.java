@@ -26,75 +26,71 @@ public class JdbcNotificationDetailsRepository implements
 	}
 
 	public JdbcNotificationDetailsRepository() {
-		
+
 	}
 
 	public void insert(NotificationDetails notificationDetails) {
-		jdbcTemplate.update("insert into notificationdetails"
-				+ "(notificationdetailsid,notificationtypeid,organisationdetailsid,details,status) "
-				+ " values (?,?,?,?,?)",
-				UUID.randomUUID(),
-				notificationDetails.getNotificationTypeID(),
-				notificationDetails.getOrganisationdetailsID(),
-				notificationDetails.getDetails(),
-				notificationDetails.isStatus());
+		jdbcTemplate
+				.update("insert into notificationdetails"
+						+ "(notificationdetailsid,notificationtypeid,organisationdetailsid,details,status) "
+						+ " values (?,?,?,?,?)", UUID.randomUUID(),
+						notificationDetails.getNotificationTypeID(),
+						notificationDetails.getOrganisationdetailsID(),
+						notificationDetails.getDetails(),
+						notificationDetails.isStatus());
 
 	}
 
 	public void update(NotificationDetails notificationDetails) {
 		jdbcTemplate.update("update notificationdetails "
-				+ "set notificationtypeid=?, "
-				+ " organisationdetailsid=?,"
-				+ " details=?,"
-				+ " status=? "
+				+ "set notificationtypeid=?, " + " organisationdetailsid=?,"
+				+ " details=?," + " status=? "
 				+ " where notificationdetailsid=?",
-				
-				notificationDetails.getNotificationTypeID(),
+
+		notificationDetails.getNotificationTypeID(),
 				notificationDetails.getOrganisationdetailsID(),
 				notificationDetails.getDetails(),
 				notificationDetails.isStatus(),
-				notificationDetails.getNotificationDetailsID()
-				);
-				
+				notificationDetails.getNotificationDetailsID());
+
 	}
 
 	public void delete(NotificationDetails notificationDetails) {
 		jdbcTemplate.update("delete from notificationdetails "
 				+ " where notificationdetailsid=?",
-				notificationDetails.getNotificationDetailsID()
-				);
+				notificationDetails.getNotificationDetailsID());
 	}
-	
+
 	public List<NotificationDetails> getAll() {
 		// may be i need a join
-		return jdbcTemplate.query(
-				"select notificationdetailsid,notificationtypeid,organisationdetailsid,details,status"
+		return jdbcTemplate
+				.query("select notificationdetailsid,notificationtypeid,organisationdetailsid,details,status"
 						+ " from notificationdetails",
-				new NotificationDetailsRowMapper());
+						new NotificationDetailsRowMapper());
 	}
 
 	public NotificationDetails findById(String notificationDetailsId) {
 		String sql = "select notificationdetailsid,notificationtypeid,organisationdetailsid,details,status"
 				+ " from notificationdetails where notificationdetailsid=?";
-		try{
+		try {
 			NotificationDetails notificationDetails;
-			notificationDetails =(NotificationDetails) jdbcTemplate.queryForObject(
-				sql, new Object[] { notificationDetailsId }, new NotificationDetailsSingleRowMapper());
-		
-		return notificationDetails;
+			notificationDetails = (NotificationDetails) jdbcTemplate
+					.queryForObject(sql,
+							new Object[] { notificationDetailsId },
+							new NotificationDetailsSingleRowMapper());
+
+			return notificationDetails;
 		}
-		
-		catch(EmptyResultDataAccessException e){
+
+		catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
 
 	public void delete(String id) {
 		jdbcTemplate.update("delete from notificationdetails "
-				+ " where notificationdetailsid=?",
-				id
-				);
-		
+				+ " where notificationdetailsid=?", id);
+
 	}
 }
 
@@ -122,7 +118,6 @@ class NotificationDetailsSingleRowMapper implements RowMapper {
 		return notificationDetails;
 	}
 }
-
 
 class NotificationDetailsRowMapper implements RowMapper<NotificationDetails> {
 

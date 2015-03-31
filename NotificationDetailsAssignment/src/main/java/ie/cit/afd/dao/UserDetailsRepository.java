@@ -10,8 +10,11 @@ public interface UserDetailsRepository {
 	void update(UserDetails userdetails);
 
 	void delete(UserDetails userdetails);
+
 	void delete(String id);
+
 	UserDetails findByusername(String username);
+
 	UserDetails findById(String id);
 
 	List<UserDetails> getAll();

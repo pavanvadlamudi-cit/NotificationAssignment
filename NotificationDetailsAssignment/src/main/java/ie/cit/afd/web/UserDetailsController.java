@@ -1,4 +1,5 @@
 package ie.cit.afd.web;
+
 import ie.cit.afd.dao.UserDetailsRepository;
 import ie.cit.afd.models.UserDetails;
 
@@ -26,23 +27,23 @@ import org.springframework.web.util.UriTemplate;
 @Controller
 public class UserDetailsController {
 	private UserDetailsRepository udrrepo;
+
 	@Autowired
 	public UserDetailsController(UserDetailsRepository udrrepo) {
 		this.udrrepo = udrrepo;
 	}
 
-	@RequestMapping(value = {"/userdetails","/userdetails/all"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/userdetails", "/userdetails/all" }, method = RequestMethod.GET)
 	public String getAll(Model model) {
 		model.addAttribute("userdetails", udrrepo.getAll());
 		return "userdetails";
 	}
-	
 
 	@RequestMapping(value = "/userdetails", method = RequestMethod.POST)
 	public String create(@RequestParam String username,
-	@RequestParam String password,
-	@RequestParam String organisationDetailsID) {
-		
+			@RequestParam String password,
+			@RequestParam String organisationDetailsID) {
+
 		UserDetails userDetails = new UserDetails();
 		userDetails.setUsername(username);
 		userDetails.setPassword(password);
@@ -60,12 +61,11 @@ public class UserDetailsController {
 
 	@RequestMapping(value = "/userdetails/{userDetailsID}", method = RequestMethod.PUT)
 	public String update(@RequestParam String userDetailsID,
-			@RequestParam String username,
-			@RequestParam String password,
+			@RequestParam String username, @RequestParam String password,
 			@RequestParam String organisationDetailsID,
 			@RequestParam String details) {
 		UserDetails userDetails = udrrepo.findById(userDetailsID);
-		if (userDetails!=null){
+		if (userDetails != null) {
 			userDetails.setUsername(username);
 			userDetails.setPassword(password);
 			userDetails.setOrganisationDetailsID(organisationDetailsID);
@@ -74,13 +74,14 @@ public class UserDetailsController {
 		}
 		return "redirect:all";
 	}
-	
+
 	private String getLocationForUserDetailsResource(UserDetails userDetails,
 			HttpServletRequest request) {
 		StringBuffer url = request.getRequestURL();
 		UriTemplate template = new UriTemplate(url.append("/{childId}")
 				.toString());
-		return template.expand(userDetails.getUserDetailsID(), template).toASCIIString();
+		return template.expand(userDetails.getUserDetailsID(), template)
+				.toASCIIString();
 	}
 
 	// Exception handler for findById if "Todo" item does not exist in repo

@@ -1,4 +1,5 @@
 package ie.cit.afd.web;
+
 import ie.cit.afd.dao.OrganisationDetailsRepository;
 import ie.cit.afd.models.OrganisationDetails;
 
@@ -27,21 +28,22 @@ import org.springframework.web.util.UriTemplate;
 @Controller
 public class OrganisationDetailsController {
 	private OrganisationDetailsRepository ordrepo;
+
 	@Autowired
 	public OrganisationDetailsController(OrganisationDetailsRepository ordrepo) {
 		this.ordrepo = ordrepo;
 	}
 
-	@RequestMapping(value = {"/organisationdetails","/organisationdetails/all"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/organisationdetails",
+			"/organisationdetails/all" }, method = RequestMethod.GET)
 	public String getAll(Model model) {
 		model.addAttribute("organisationdetails", ordrepo.getAll());
 		return "organisationdetails";
 	}
-	
 
 	@RequestMapping(value = "/organisationdetails", method = RequestMethod.POST)
 	public String create(@RequestParam String name) {
-		
+
 		OrganisationDetails organisationDetails = new OrganisationDetails();
 		organisationDetails.setName(name);
 		organisationDetails.setStatus(true);
@@ -56,22 +58,25 @@ public class OrganisationDetailsController {
 	}
 
 	@RequestMapping(value = "{organisationDetailsID}", method = RequestMethod.PUT)
-	public String update(@RequestParam String organisationDetailsID,@RequestParam String name) {
-		OrganisationDetails organisationDetails = ordrepo.findById(organisationDetailsID);
-		if (organisationDetails!=null){
+	public String update(@RequestParam String organisationDetailsID,
+			@RequestParam String name) {
+		OrganisationDetails organisationDetails = ordrepo
+				.findById(organisationDetailsID);
+		if (organisationDetails != null) {
 			organisationDetails.setName(name);
 			organisationDetails.setStatus(true);
 			ordrepo.update(organisationDetails);
 		}
 		return "redirect:all";
 	}
-	
-	private String getLocationForOrganisationDetailsResource(OrganisationDetails organisationDetails,
-			HttpServletRequest request) {
+
+	private String getLocationForOrganisationDetailsResource(
+			OrganisationDetails organisationDetails, HttpServletRequest request) {
 		StringBuffer url = request.getRequestURL();
 		UriTemplate template = new UriTemplate(url.append("/{childId}")
 				.toString());
-		return template.expand(organisationDetails.getOrganisationDetailsID(), template).toASCIIString();
+		return template.expand(organisationDetails.getOrganisationDetailsID(),
+				template).toASCIIString();
 	}
 
 	// Exception handler for findById if "Todo" item does not exist in repo
