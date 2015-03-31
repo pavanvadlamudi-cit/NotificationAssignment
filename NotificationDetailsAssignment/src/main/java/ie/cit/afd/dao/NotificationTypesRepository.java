@@ -12,6 +12,8 @@ public interface NotificationTypesRepository {
 
 	void delete(NotificationTypes notificationtypes);
 	NotificationTypes findBycode(String code);
+	NotificationTypes findById(String id);
+	void delete(String id);
 	//NotificationTypes findById(String id);
 	List<NotificationTypes> getAll();
 

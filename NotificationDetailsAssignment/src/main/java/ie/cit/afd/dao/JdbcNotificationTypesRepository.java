@@ -52,7 +52,7 @@ public class JdbcNotificationTypesRepository implements
 	}
 
 	public void delete(NotificationTypes notificationTypes) {
-		jdbcTemplate.update("delete from notificatintypes where notificationtypeid=?",notificationTypes.getNotificationTypeID());
+		jdbcTemplate.update("delete from notificationtypes where notificationtypeid=?",notificationTypes.getNotificationTypeID());
 
 	}
 
@@ -70,6 +70,28 @@ public class JdbcNotificationTypesRepository implements
 		NotificationTypes notificationTypes;
 		notificationTypes =(NotificationTypes) jdbcTemplate.queryForObject(
 				sql, new Object[] { code }, new NotificationTypesSingleRowMapper());
+		
+		return notificationTypes;
+		}
+		
+		catch(EmptyResultDataAccessException e){
+			return null;
+		}
+	}
+
+	public void delete(String id) {
+		jdbcTemplate.update("delete from notificationtypes where notificationtypeid=?",id);
+
+		
+	}
+
+	public NotificationTypes findById(String notificationtypeid) {
+		String sql = "select notificationtypeid,name,code,status"
+				+ " from notificationtypes where notificationtypeid=?";
+		try{
+		NotificationTypes notificationTypes;
+		notificationTypes =(NotificationTypes) jdbcTemplate.queryForObject(
+				sql, new Object[] { notificationtypeid }, new NotificationTypesSingleRowMapper());
 		
 		return notificationTypes;
 		}

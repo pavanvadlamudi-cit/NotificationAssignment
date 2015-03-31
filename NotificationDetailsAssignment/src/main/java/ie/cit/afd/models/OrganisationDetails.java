@@ -1,38 +1,38 @@
 package ie.cit.afd.models;
 
 public class OrganisationDetails {
-	String OrganisationDetailsID;
-	String Name;
-	boolean Status;
+	String organisationDetailsID;
+	String name;
+	boolean status;
 
 	@Override
 	public String toString() {
 		return "OrganisationDetails [OrganisationDetailsID="
-				+ OrganisationDetailsID + ", Name=" + Name + ", Status="
-				+ Status + "]";
+				+ organisationDetailsID + ", Name=" + name + ", Status="
+				+ status + "]";
 	}
 
 	public String getOrganisationDetailsID() {
-		return OrganisationDetailsID;
+		return organisationDetailsID;
 	}
 
 	public void setOrganisationDetailsID(String organisationDetailsID) {
-		OrganisationDetailsID = organisationDetailsID;
+		this.organisationDetailsID = organisationDetailsID;
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	public boolean isStatus() {
-		return Status;
+		return status;
 	}
 
 	public void setStatus(boolean status) {
-		Status = status;
+		this.status = status;
 	}
 }

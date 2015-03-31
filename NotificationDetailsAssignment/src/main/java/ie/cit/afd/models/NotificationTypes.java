@@ -1,53 +1,47 @@
 package ie.cit.afd.models;
 
 public class NotificationTypes {
-	String NotificationTypeID;
-	String Name;
-	String Code;
-	boolean Status;
+	private String notificationTypeID;
+	private String name;
+	private String code;
+	private boolean status;
 	public NotificationTypes()
 	{
-		this.NotificationTypeID="";
+		this.notificationTypeID="";
 	}
 	public NotificationTypes(String name, String code, boolean status){
-		this.Name=name;
-		this.Code=code;
-		this.Status= status;
+		this.name=name;
+		this.code=code;
+		this.status= status;
 	}
+	
 	public String getNotificationTypeID() {
-		return NotificationTypeID;
+		return notificationTypeID;
 	}
-
 	public void setNotificationTypeID(String notificationTypeID) {
-		NotificationTypeID = notificationTypeID;
+		this.notificationTypeID = notificationTypeID;
 	}
-
 	public String getName() {
-		return Name;
+		return name;
 	}
-
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
-
 	public String getCode() {
-		return Code;
+		return code;
 	}
-
 	public void setCode(String code) {
-		Code = code;
+		this.code = code;
 	}
-
 	public boolean isStatus() {
-		return Status;
+		return status;
 	}
-
 	public void setStatus(boolean status) {
-		Status = status;
+		this.status = status;
 	}
 	@Override
 	public String toString() {
-		return "NotificationTypes [id=" + NotificationTypeID + ", Name=" + Name + ", Code=" + Code +", Status="
-				+ Status + ", toString()=" + super.toString() + "]";
+		return "NotificationTypes [id=" + notificationTypeID + ", Name=" + name + ", Code=" + code +", Status="
+				+ status + ", toString()=" + super.toString() + "]";
 	}
 }

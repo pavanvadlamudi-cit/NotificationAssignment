@@ -1,57 +1,57 @@
 package ie.cit.afd.models;
 
 public class UserDetails {
-	String UserDetailsID;
-	String Username;
-	String Password;
-	String OrganisationDetailsID;
-	boolean Status;
+	String userDetailsID;
+	String username;
+	String password;
+	String organisationDetailsID;
+	boolean status;
 
 	@Override
 	public String toString() {
-		return "UserDetails [UserDetailsID=" + UserDetailsID + ", Username="
-				+ Username + ", Password=" + Password
-				+ ", OrganisationDetailsID=" + OrganisationDetailsID
-				+ ", Status=" + Status + "]";
+		return "UserDetails [userDetailsID=" + userDetailsID + ", Username="
+				+ username + ", Password=" + password
+				+ ", OrganisationDetailsID=" + organisationDetailsID
+				+ ", Status=" + status + "]";
 	}
 
 	public String getUserDetailsID() {
-		return UserDetailsID;
+		return userDetailsID;
 	}
 
 	public void setUserDetailsID(String userDetailsID) {
-		UserDetailsID = userDetailsID;
+		this.userDetailsID = userDetailsID;
 	}
 
 	public String getUsername() {
-		return Username;
+		return username;
 	}
 
 	public void setUsername(String username) {
-		Username = username;
+		this.username = username;
 	}
 
 	public String getPassword() {
-		return Password;
+		return password;
 	}
 
 	public void setPassword(String password) {
-		Password = password;
+		this.password = password;
 	}
 
 	public String getOrganisationDetailsID() {
-		return OrganisationDetailsID;
+		return organisationDetailsID;
 	}
 
 	public void setOrganisationDetailsID(String organisationDetailsID) {
-		OrganisationDetailsID = organisationDetailsID;
+		this.organisationDetailsID = organisationDetailsID;
 	}
 
 	public boolean isStatus() {
-		return Status;
+		return status;
 	}
 
 	public void setStatus(boolean status) {
-		Status = status;
+		this.status = status;
 	}
 }

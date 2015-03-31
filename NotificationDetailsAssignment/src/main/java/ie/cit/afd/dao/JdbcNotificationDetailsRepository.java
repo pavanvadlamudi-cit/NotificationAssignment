@@ -64,7 +64,7 @@ public class JdbcNotificationDetailsRepository implements
 				notificationDetails.getNotificationDetailsID()
 				);
 	}
-
+	
 	public List<NotificationDetails> getAll() {
 		// may be i need a join
 		return jdbcTemplate.query(

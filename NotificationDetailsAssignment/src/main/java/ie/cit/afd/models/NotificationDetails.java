@@ -1,58 +1,58 @@
 package ie.cit.afd.models;
 
 public class NotificationDetails {
-	String NotificationDetailsID;
-	String NotificationTypeID;
-	String OrganisationdetailsID;
-	String Details;
-	boolean Status;
+	String notificationDetailsID;
+	String notificationTypeID;
+	String organisationdetailsID;
+	String details;
+	boolean status;
 
 	public String getNotificationDetailsID() {
-		return NotificationDetailsID;
+		return notificationDetailsID;
 	}
 
 	public void setNotificationDetailsID(String notificationDetailsID) {
-		NotificationDetailsID = notificationDetailsID;
+	   this.notificationDetailsID = notificationDetailsID;
 	}
 
 	public String getNotificationTypeID() {
-		return NotificationTypeID;
+		return notificationTypeID;
 	}
 
 	public void setNotificationTypeID(String notificationTypeID) {
-		NotificationTypeID = notificationTypeID;
+		this.notificationTypeID = notificationTypeID;
 	}
 
 	public String getOrganisationdetailsID() {
-		return OrganisationdetailsID;
+		return organisationdetailsID;
 	}
 
 	public void setOrganisationdetailsID(String organisationdetailsID) {
-		OrganisationdetailsID = organisationdetailsID;
+		this.organisationdetailsID = organisationdetailsID;
 	}
 	
 	public String getDetails() {
-		return Details;
+		return details;
 	}
 
 	public void setDetails(String details) {
-		Details = details;
+		this.details = details;
 	}
 
 	public boolean isStatus() {
-		return Status;
+		return status;
 	}
 
 	public void setStatus(boolean status) {
-		Status = status;
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
 		return "NotificationDetails [NotificationDetailsID="
-				+ NotificationDetailsID + ", NotificationTypeID="
-				+ NotificationTypeID + ", Details=" + Details + ", Status="
-				+ Status + "]";
+				+ notificationDetailsID + ", NotificationTypeID="
+				+ notificationTypeID + ", Details=" + details + ", Status="
+				+ status + "]";
 	}
 
 }
