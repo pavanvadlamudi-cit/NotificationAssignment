@@ -32,7 +32,7 @@ public class NotificationTypesController {
 	}
 
 	@RequestMapping(value = {"/notificationtypes","/notificationtypes/all"}, method = RequestMethod.GET)
-	public String getAllNotificationTypes(Model model) {
+	public String getAll(Model model) {
 		model.addAttribute("notificationtypes", ntrepo.getAll());
 		return "notificationtypes";
 	}
@@ -46,20 +46,17 @@ public class NotificationTypesController {
 		notificationType.setName(name);
 		notificationType.setStatus(true);
 		ntrepo.insert(notificationType);
-		//return "redirect:/notificationtypes/all";
-		//return "redirect:notificationtypes/all"; == http://localhost:8081/NotificationDetailsAssignment/Notification/Notification/notificationtypes
-		//return "redirect:/notificationtypes/all"; http://localhost:8081/NotificationDetailsAssignment/Notification/Notification/notificationtypes
 		return "redirect:notificationtypes";
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	public String delete(@PathVariable String id) {
+	@RequestMapping(value = "{notificationTypeID}", method = RequestMethod.DELETE)
+	public String deleteByNotificationTypeId(@PathVariable String id) {
 		ntrepo.delete(id);
 		return "redirect:notificationtypes";
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public String update(@PathVariable String id,String name) {
+	@RequestMapping(value = "{notificationTypeID}", method = RequestMethod.PUT)
+	public String updateByNotificationTypeId(@PathVariable String id,String name) {
 		NotificationTypes notificationType = ntrepo.findById(id);
 		notificationType.setName(name);
 		ntrepo.update(notificationType);
@@ -74,7 +71,7 @@ public class NotificationTypesController {
 		return template.expand(notificationType.getNotificationTypeID(), template).toASCIIString();
 	}
 
-	// Exception handler for findById if "Todo" item does not exist in repo
+	// Exception handler for findById if "NotificationDetails" item does not exist in repo
 	@ExceptionHandler(IncorrectResultSizeDataAccessException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public void notFound() {

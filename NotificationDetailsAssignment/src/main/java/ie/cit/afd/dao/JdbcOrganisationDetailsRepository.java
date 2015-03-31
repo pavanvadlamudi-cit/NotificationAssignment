@@ -80,6 +80,30 @@ public class JdbcOrganisationDetailsRepository implements
 						+ " from organisationdetails",
 				new OrganisationDetailsRowMapper());
 	}
+
+	public void delete(String id) {
+		jdbcTemplate.update(
+				"delete from organisationdetails "
+						+ " where organisationdetailsid=?",
+						id);
+		
+	}
+
+	public OrganisationDetails findById(String id) {
+		String sql = "select organisationdetailsid,  name,  status "
+				+ " from organisationdetails where organisationdetailsid=?";
+		try{
+			OrganisationDetails organisationDetails;
+			organisationDetails =(OrganisationDetails) jdbcTemplate.queryForObject(
+				sql, new Object[] { id }, new OrganisationDetailsSingleRowMapper());
+		
+		return organisationDetails;
+		}
+		
+		catch(EmptyResultDataAccessException e){
+			return null;
+		}
+	}
 }
 
 class OrganisationDetailsSingleRowMapper implements RowMapper {

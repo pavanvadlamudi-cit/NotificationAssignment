@@ -71,7 +71,7 @@ public class JdbcUserDetailsRepository implements UserDetailsRepository {
 
 	public UserDetails findByusername(String username) {
 		String sql = "select userdetailsid,  username,  password,  organisationdetailsid,  status "
-				+ " from userdetails where code=?";
+				+ " from userdetails where username=?";
 		try{
 			UserDetails userDetails;
 			userDetails =(UserDetails) jdbcTemplate.queryForObject(
@@ -84,6 +84,31 @@ public class JdbcUserDetailsRepository implements UserDetailsRepository {
 			return null;
 		}
 		
+	}
+
+	public void delete(String id) {
+		jdbcTemplate.update("delete "
+				+ "from userdetails "
+				+ "where userdetailsid=?"
+				, 
+				id);
+		
+	}
+
+	public UserDetails findById(String id) {
+		String sql = "select userdetailsid,  username,  password,  organisationdetailsid,  status "
+				+ " from userdetails where userdetailsid=?";
+		try{
+			UserDetails userDetails;
+			userDetails =(UserDetails) jdbcTemplate.queryForObject(
+				sql, new Object[] { id }, new UserDetailsSingleRowMapper());
+		
+		return userDetails;
+		}
+		
+		catch(EmptyResultDataAccessException e){
+			return null;
+		}
 	}
 }
 

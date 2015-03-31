@@ -88,6 +88,14 @@ public class JdbcNotificationDetailsRepository implements
 			return null;
 		}
 	}
+
+	public void delete(String id) {
+		jdbcTemplate.update("delete from notificationdetails "
+				+ " where notificationdetailsid=?",
+				id
+				);
+		
+	}
 }
 
 class NotificationDetailsSingleRowMapper implements RowMapper {
