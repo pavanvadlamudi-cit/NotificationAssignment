@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.impl.Log4JLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,8 @@ public class OrganisationDetailsController {
 	}
 
 	@RequestMapping(value = {"/organisationdetails","/organisationdetails/all"}, method = RequestMethod.GET)
-	public String getAllOrganisationDetails(Model model) {
-		model.addAttribute("organisationdetail", ordrepo.getAll());
+	public String getAll(Model model) {
+		model.addAttribute("organisationdetails", ordrepo.getAll());
 		return "organisationdetails";
 	}
 	
@@ -48,10 +49,10 @@ public class OrganisationDetailsController {
 		return "redirect:organisationdetails";
 	}
 
-	@RequestMapping(value = "{organisationDetailsID}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/organisationdetails/{organisationDetailsID}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable String organisationDetailsID) {
 		ordrepo.delete(organisationDetailsID);
-		return "redirect:organisationdetails";
+		return "redirect:../organisationdetails";
 	}
 
 	@RequestMapping(value = "{organisationDetailsID}", method = RequestMethod.PUT)

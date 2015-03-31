@@ -33,7 +33,7 @@ public class NotificationDetailsController {
 
 	@RequestMapping(value = {"/notificationdetails","/notificationdetails/all"}, method = RequestMethod.GET)
 	public String getAll(Model model) {
-		model.addAttribute("notificationdetail", ntdrepo.getAll());
+		model.addAttribute("notificationdetails", ntdrepo.getAll());
 		return "notificationdetails";
 	}
 	
@@ -50,10 +50,10 @@ public class NotificationDetailsController {
 		return "redirect:notificationdetails";
 	}
 
-	@RequestMapping(value = "{notificationDetailsID}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/notificationdetails/{notificationDetailsID}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable String notificationDetailsID) {
 		ntdrepo.delete(notificationDetailsID);
-		return "redirect:notificationdetails";
+		return "redirect:../notificationdetails";
 	}
 
 	@RequestMapping(value = "{notificationDetailsID}", method = RequestMethod.PUT)

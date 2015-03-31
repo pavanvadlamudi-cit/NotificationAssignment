@@ -49,7 +49,7 @@ public class NotificationTypesController {
 		return "redirect:notificationtypes";
 	}
 
-	@RequestMapping(value = "{notificationTypeID}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/notificationtypes/{notificationTypeID}", method = RequestMethod.DELETE)
 	public String deleteByNotificationTypeId(@PathVariable String id) {
 		ntrepo.delete(id);
 		return "redirect:notificationtypes";

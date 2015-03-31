@@ -33,7 +33,7 @@ public class UserDetailsController {
 
 	@RequestMapping(value = {"/userdetails","/userdetails/all"}, method = RequestMethod.GET)
 	public String getAll(Model model) {
-		model.addAttribute("userdetail", udrrepo.getAll());
+		model.addAttribute("userdetails", udrrepo.getAll());
 		return "userdetails";
 	}
 	
@@ -41,24 +41,24 @@ public class UserDetailsController {
 	@RequestMapping(value = "/userdetails", method = RequestMethod.POST)
 	public String create(@RequestParam String username,
 	@RequestParam String password,
-	@RequestParam String organisationdetailsID) {
+	@RequestParam String organisationDetailsID) {
 		
 		UserDetails userDetails = new UserDetails();
 		userDetails.setUsername(username);
 		userDetails.setPassword(password);
-		userDetails.setOrganisationDetailsID(organisationdetailsID);
+		userDetails.setOrganisationDetailsID(organisationDetailsID);
 		userDetails.setStatus(true);
 		udrrepo.insert(userDetails);
 		return "redirect:userdetails";
 	}
 
-	@RequestMapping(value = "{userDetailsID}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/userdetails/{userDetailsID}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable String userDetailsID) {
 		udrrepo.delete(userDetailsID);
-		return "redirect:userdetails";
+		return "redirect:../userdetails";
 	}
 
-	@RequestMapping(value = "{userDetailsID}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/userdetails/{userDetailsID}", method = RequestMethod.PUT)
 	public String update(@RequestParam String userDetailsID,
 			@RequestParam String username,
 			@RequestParam String password,
