@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,12 +34,14 @@ public class JdbcNotificationDetailsRepository implements
 		jdbcTemplate
 				.update("insert into notificationdetails"
 						+ "(notificationdetailsid,notificationtypeid,organisationdetailsid,details,status) "
-						+ " values (?,?,?,?,?)", UUID.randomUUID(),
+						+ " values (?,?,?,?,?)", notificationDetails.getNotificationDetailsID(),
 						notificationDetails.getNotificationTypeID(),
 						notificationDetails.getOrganisationdetailsID(),
 						notificationDetails.getDetails(),
 						notificationDetails.isStatus());
-
+		jdbcTemplate.update("insert into owners(notificationdetailsid, username) values(?,?)",
+				notificationDetails.getNotificationDetailsID(), 
+				SecurityContextHolder.getContext().getAuthentication().getName());
 	}
 
 	public void update(NotificationDetails notificationDetails) {
@@ -69,7 +72,12 @@ public class JdbcNotificationDetailsRepository implements
 						+ " ntd inner join notificationtypes nt on "
 						+ "ntd.notificationtypeid = nt.notificationtypeid 	"
 						+ "inner join organisationdetails ord on "
-						+ "ntd.organisationdetailsid = ntd.organisationdetailsid ",
+						+ "ntd.organisationdetailsid = ord.organisationdetailsid "
+						+ "inner join owners ow on "
+								+ "ntd.notificationdetailsid = ow.notificationdetailsid "
+								+ "where ow.username = ? ",
+								new Object[] { 
+										SecurityContextHolder.getContext().getAuthentication().getName() },
 						new NotificationDetailsRowMapper());
 	}
 
@@ -79,13 +87,16 @@ public class JdbcNotificationDetailsRepository implements
 				+ " ntd inner join notificationtypes nt on "
 				+ "ntd.notificationtypeid = nt.notificationtypeid 	"
 				+ "inner join organisationdetails ord on "
-				+ "ntd.organisationdetailsid = ntd.organisationdetailsid "
-				+ " where ntd.notificationdetailsid=?";
+				+ "ntd.organisationdetailsid = ord.organisationdetailsid "
+				+ "inner join owners ow on "
+				+ "ntd.notificationdetailsid = ow.notificationdetailsid "
+				+ " where ntd.notificationdetailsid=? and ow.username=?";
 		try {
 			NotificationDetails notificationDetails;
 			notificationDetails = (NotificationDetails) jdbcTemplate
 					.queryForObject(sql,
-							new Object[] { notificationDetailsId },
+							new Object[] { notificationDetailsId,
+							SecurityContextHolder.getContext().getAuthentication().getName() },
 							new NotificationDetailsSingleRowMapper());
 
 			return notificationDetails;
@@ -97,6 +108,9 @@ public class JdbcNotificationDetailsRepository implements
 	}
 
 	public void delete(String id) {
+		jdbcTemplate.update("delete from owners "
+				+ " where notificationdetailsid=? and username=?"
+				, id,SecurityContextHolder.getContext().getAuthentication().getName());
 		jdbcTemplate.update("delete from notificationdetails "
 				+ " where notificationdetailsid=?", id);
 

@@ -1,5 +1,7 @@
 package ie.cit.afd.models;
 
+import java.util.UUID;
+
 public class NotificationDetails {
 	String notificationDetailsID;
 	String notificationTypeID;
@@ -12,7 +14,10 @@ public class NotificationDetails {
 
 	String details;
 	boolean status;
-
+	public NotificationDetails(){
+		this.notificationDetailsID = UUID.randomUUID().toString();	
+	}
+	
 	public String getOrganisationdetailsName() {
 		return organisationdetailsName;
 	}
