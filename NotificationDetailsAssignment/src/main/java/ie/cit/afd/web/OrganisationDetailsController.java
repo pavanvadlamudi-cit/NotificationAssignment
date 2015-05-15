@@ -3,13 +3,10 @@ package ie.cit.afd.web;
 import ie.cit.afd.dao.OrganisationDetailsRepository;
 import ie.cit.afd.models.OrganisationDetails;
 
-import java.util.List;
-import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.impl.Log4JLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;

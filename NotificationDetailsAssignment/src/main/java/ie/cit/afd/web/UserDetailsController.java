@@ -3,11 +3,10 @@ package ie.cit.afd.web;
 import ie.cit.afd.dao.UserDetailsRepository;
 import ie.cit.afd.models.UserDetails;
 
-import java.util.List;
-import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
