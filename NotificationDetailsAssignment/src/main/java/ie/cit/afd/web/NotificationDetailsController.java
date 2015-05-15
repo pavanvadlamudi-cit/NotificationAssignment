@@ -1,18 +1,26 @@
 package ie.cit.afd.web;
 
 import ie.cit.afd.dao.NotificationDetailsRepository;
+import ie.cit.afd.dao.NotificationTypesRepository;
 import ie.cit.afd.models.NotificationDetails;
 
 
+import ie.cit.afd.models.NotificationTypes;
+
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +33,8 @@ import org.springframework.web.util.UriTemplate;
 @Controller
 public class NotificationDetailsController {
 	private NotificationDetailsRepository ntdrepo;
+	@Autowired
+    private NotificationTypesRepository ntrepo;
 
 	@Autowired
 	public NotificationDetailsController(NotificationDetailsRepository ntdrepo) {
@@ -72,6 +82,20 @@ public class NotificationDetailsController {
 			ntdrepo.update(notificationDetails);
 		}
 		return "redirect:all";
+	}
+	
+	@ModelAttribute("NotificationTypeList")
+	public Map getAllNotificationTypes()
+	{
+		Map<String,String> referenceData = new HashMap();
+		List<NotificationTypes> ntr =ntrepo.getAll();
+		if (ntr!=null){
+			for(Iterator<NotificationTypes> i = ntr.iterator(); i.hasNext();){
+				NotificationTypes nt = i.next();
+				referenceData.put(nt.getCode(), nt.getName());
+			}
+		}
+		return referenceData;
 	}
 	// REST end-points
 		// curl

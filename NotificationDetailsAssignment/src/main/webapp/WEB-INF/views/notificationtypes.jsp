@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <html>
 <h1>Notification Type Items</h1>
 
@@ -9,7 +10,6 @@
 		<li>Name: <input name="name" type="text" value="">
 		</li>
 	</ul>
-
 
 	<input name="create" type="submit" value="Create">
 </form>
