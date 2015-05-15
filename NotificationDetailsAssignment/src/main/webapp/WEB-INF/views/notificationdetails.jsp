@@ -79,7 +79,7 @@
 				<div class="Cell">${row.index+1}.</div>
 				<div class="Cell">${notificationdetail.notificationTypeCode}</div>
 
-				<div class="Cell">${notificationdetail.organisationdetailsID}</div>
+				<div class="Cell">${notificationdetail.organisationdetailsName}</div>
 				<div class="Cell">${notificationdetail.details}</div>
 
 

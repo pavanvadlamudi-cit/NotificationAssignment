@@ -24,7 +24,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -111,7 +110,7 @@ public class NotificationDetailsController {
 		if (ntr!=null){
 			for(Iterator<OrganisationDetails> i = ntr.iterator(); i.hasNext();){
 				OrganisationDetails od = i.next();
-				referenceData.put(od.getOrganisationDetailsID(),od.getName()						);
+				referenceData.put(od.getOrganisationDetailsID(),od.getName());
 			}
 		}
 		return referenceData;
