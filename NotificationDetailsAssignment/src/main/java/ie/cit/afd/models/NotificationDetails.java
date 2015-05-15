@@ -3,10 +3,30 @@ package ie.cit.afd.models;
 public class NotificationDetails {
 	String notificationDetailsID;
 	String notificationTypeID;
+	String notificationTypeCode;
+	
+
 	String organisationdetailsID;
+	String organisationdetailsName;
+	
+
 	String details;
 	boolean status;
 
+	public String getOrganisationdetailsName() {
+		return organisationdetailsName;
+	}
+
+	public void setOrganisationdetailsName(String organisationdetailsName) {
+		this.organisationdetailsName = organisationdetailsName;
+	}
+	public String getNotificationTypeCode() {
+		return notificationTypeCode;
+	}
+
+	public void setNotificationTypeCode(String notificationTypeCode) {
+		this.notificationTypeCode = notificationTypeCode;
+	}
 	public String getNotificationDetailsID() {
 		return notificationDetailsID;
 	}
@@ -51,7 +71,9 @@ public class NotificationDetails {
 	public String toString() {
 		return "NotificationDetails [NotificationDetailsID="
 				+ notificationDetailsID + ", NotificationTypeID="
-				+ notificationTypeID + ", Details=" + details + ", Status="
+				+ notificationTypeID +", notificationTypeName=" 
+				+ notificationTypeCode  
+				+ " Details=" + details + ", Status="
 				+ status + "]";
 	}
 

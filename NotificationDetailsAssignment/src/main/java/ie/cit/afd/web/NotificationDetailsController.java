@@ -2,10 +2,12 @@ package ie.cit.afd.web;
 
 import ie.cit.afd.dao.NotificationDetailsRepository;
 import ie.cit.afd.dao.NotificationTypesRepository;
+import ie.cit.afd.dao.OrganisationDetailsRepository;
 import ie.cit.afd.models.NotificationDetails;
 
 
 import ie.cit.afd.models.NotificationTypes;
+import ie.cit.afd.models.OrganisationDetails;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,6 +37,8 @@ public class NotificationDetailsController {
 	private NotificationDetailsRepository ntdrepo;
 	@Autowired
     private NotificationTypesRepository ntrepo;
+	@Autowired
+    private OrganisationDetailsRepository odrrepo;
 
 	@Autowired
 	public NotificationDetailsController(NotificationDetailsRepository ntdrepo) {
@@ -85,14 +89,29 @@ public class NotificationDetailsController {
 	}
 	
 	@ModelAttribute("NotificationTypeList")
-	public Map getAllNotificationTypes()
+	public Map<String,String> getAllNotificationTypes()
 	{
 		Map<String,String> referenceData = new HashMap();
 		List<NotificationTypes> ntr =ntrepo.getAll();
 		if (ntr!=null){
 			for(Iterator<NotificationTypes> i = ntr.iterator(); i.hasNext();){
 				NotificationTypes nt = i.next();
-				referenceData.put(nt.getCode(), nt.getName());
+				referenceData.put(nt.getNotificationTypeID(),nt.getCode()+" - " + nt.getName()
+						);
+			}
+		}
+		return referenceData;
+	}
+	
+	@ModelAttribute("OrganisationdetailsList")
+	public Map<String,String> getAllOrganisationdetails()
+	{
+		Map<String,String> referenceData = new HashMap();
+		List<OrganisationDetails> ntr = odrrepo.getAll();
+		if (ntr!=null){
+			for(Iterator<OrganisationDetails> i = ntr.iterator(); i.hasNext();){
+				OrganisationDetails od = i.next();
+				referenceData.put(od.getOrganisationDetailsID(),od.getName()						);
 			}
 		}
 		return referenceData;

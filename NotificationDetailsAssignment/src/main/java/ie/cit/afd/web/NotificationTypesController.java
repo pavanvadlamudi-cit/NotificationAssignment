@@ -71,7 +71,7 @@ public class NotificationTypesController {
 		if (ntr!=null){
 			for(Iterator<NotificationTypes> i = ntr.iterator(); i.hasNext();){
 				NotificationTypes nt = i.next();
-				referenceData.put(nt.getCode(), nt.getName());
+				referenceData.put(nt.getNotificationTypeID(),nt.getCode()+" - " + nt.getName());
 			}
 		}
 		return referenceData;

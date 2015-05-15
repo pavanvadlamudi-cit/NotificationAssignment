@@ -64,14 +64,23 @@ public class JdbcNotificationDetailsRepository implements
 	public List<NotificationDetails> getAll() {
 		// may be i need a join
 		return jdbcTemplate
-				.query("select notificationdetailsid,notificationtypeid,organisationdetailsid,details,status"
-						+ " from notificationdetails",
+				.query("select 	"
+						+ "ntd.notificationdetailsid,	ntd.notificationtypeid,	nt.code,	"
+						+ "ntd.organisationdetailsid,	ntd.details,	ntd.status "
+						+ "from notificationdetails ntd "
+						+ "inner join notificationtypes nt on "
+						+ "ntd.notificationtypeid = nt.notificationtypeid ",
 						new NotificationDetailsRowMapper());
 	}
 
 	public NotificationDetails findById(String notificationDetailsId) {
-		String sql = "select notificationdetailsid,notificationtypeid,organisationdetailsid,details,status"
-				+ " from notificationdetails where notificationdetailsid=?";
+		String sql = "select 	"
+				+ "ntd.notificationdetailsid,	ntd.notificationtypeid,	nt.code,	"
+				+ "ntd.organisationdetailsid,	ntd.details,	ntd.status "
+				+ "from notificationdetails ntd "
+				+ "inner join notificationtypes nt on "
+				+ "ntd.notificationtypeid = nt.notificationtypeid "
+				+ " where ntd.notificationdetailsid=?";
 		try {
 			NotificationDetails notificationDetails;
 			notificationDetails = (NotificationDetails) jdbcTemplate
@@ -101,6 +110,7 @@ class NotificationDetailsSingleRowMapper implements RowMapper {
 
 		String notificationDetailsID = rs.getString("notificationdetailsid");
 		String notificationTypeID = rs.getString("notificationtypeid");
+		String notificationTypeCode = rs.getString("code");
 		String organisationdetailsID = rs.getString("organisationdetailsid");
 		String details = rs.getString("details");
 		Boolean status = rs.getBoolean("status");
@@ -111,6 +121,7 @@ class NotificationDetailsSingleRowMapper implements RowMapper {
 		notificationDetails.setOrganisationdetailsID(organisationdetailsID);
 		notificationDetails.setDetails(details);
 		notificationDetails.setStatus(status);
+		notificationDetails.setNotificationTypeCode(notificationTypeCode);
 		// notificationTypes.setId(id);
 		// notificationTypes.setName(name);
 		// notificationTypes.setStatus(status);
@@ -129,13 +140,14 @@ class NotificationDetailsRowMapper implements RowMapper<NotificationDetails> {
 		String organisationdetailsID = rs.getString("organisationdetailsid");
 		String details = rs.getString("details");
 		Boolean status = rs.getBoolean("status");
-
+		String notificationTypeCode = rs.getString("code");
 		NotificationDetails notificationDetails = new NotificationDetails();
 		notificationDetails.setNotificationDetailsID(notificationDetailsID);
 		notificationDetails.setNotificationTypeID(notificationTypeID);
 		notificationDetails.setOrganisationdetailsID(organisationdetailsID);
 		notificationDetails.setDetails(details);
 		notificationDetails.setStatus(status);
+		notificationDetails.setNotificationTypeCode(notificationTypeCode);
 		// notificationTypes.setId(id);
 		// notificationTypes.setName(name);
 		// notificationTypes.setStatus(status);

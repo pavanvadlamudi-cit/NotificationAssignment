@@ -4,81 +4,85 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-<style type="text/css">
-.Table {
-	display: table;
-}
-
-.Title {
-	display: table-caption;
-	text-align: center;
-	font-weight: bold;
-	font-size: larger;
-}
-
-.Heading {
-	display: table-row;
-	font-weight: bold;
-	text-align: center;
-}
-
-.Row {
-	display: table-row;
-}
-
-.Cell {
-	display: table-cell;
-	border: solid;
-	border-width: thin;
-	padding-left: 5px;
-	padding-right: 5px;
-}
-</style>
+<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 </head>
 <body>
+	User name:
 	<sec:authentication property="principal" var="user" />
 	${user.username }
 	<a href="../logout">Logout</a>
 	<h1>Notification Details</h1>
 
 	<form method="post" action="notificationdetails">
-		<ul style="list-style: none">
-			<!-- 			<li>Notification type: <input name="notificationTypeID" -->
-			<!-- 				type="text" value="" /> -->
-			<!-- 			</li> -->
-			<li>Notification type: 
-			<form:select path="notificationdetails" name="notificationTypeID">
+		<div class="Table">
+			<div class="Row">
+				<div class="CellNoBorder">
+					Notification type:
+				</div>
+				<div class="CellNoBorder">
+					<form:select path="notificationdetails"
+					name="notificationTypeID">
 					<form:options items="${NotificationTypeList}" />
-			</form:select>
-			</li>
-			<li>Organisation details: <input name="organisationdetailsID"
-				type="text" value="" />
-			</li>
-			<li>Details: <input name="details" type="text" value="" />
-			</li>
-		</ul>
-
-		<input name="create" type="submit" value="Create">
-	</form>
+				</form:select>
+				</div>
+			</div>
+			<div class="Row">
+				<div class="CellNoBorder">
+					Organisation details:
+				</div>
+				<div class="CellNoBorder">
+				<form:select
+					path="notificationdetails" name="organisationdetailsID">
+					<form:options items="${OrganisationdetailsList}" />
+				</form:select>
+				</div>
+			</div>
+			<div class="Row">
+				<div class="CellNoBorder">
+					Details:
+				</div>
+				<div class="CellNoBorder">
+					<input name="details" type="text" value="" />
+				</div>
+			</div>
+			<div class="Row">
+				<div class="CellNoBorder">
+					<input name="create" type="submit" value="Create" />
+				</div>
+				
+			</div>
+		</div>
+			</form>
 
 	<div class="Table">
+		<div class="Heading">
+			<div class="Cell"><!-- Column 1 --></div>
+			<div class="Cell">ID#</div>
+			<div class="Cell">Notification code</div>
+			<div class="Cell">Organisation details</div>
+			<div class="Cell">Details</div>
+		</div>
 
 		<c:forEach items="${notificationdetails}" var="notificationdetail"
 			varStatus="row">
 			<div class="Row">
-				<form method="post"
-					action="notificationdetails/${notificationdetail.notificationDetailsID}">
-					<div class="Cell">
-						<input name="_method" type="hidden" value="delete">
-					</div>
-					<div class="Cell">
-						<input name="delete" type="submit" value="Delete">
-						${row.index}. ${notificationdetail.notificationTypeID}
-					</div>
 
-					<div class="Cell">${notificationdetail.organisationdetailsID}</div>
-					<div class="Cell">${notificationdetail.details}</div>
-				</form>
+
+				<div class="Cell">
+					<form method="post"
+						action="notificationdetails/${notificationdetail.notificationDetailsID}">
+						<input name="_method" type="hidden" value="delete"> <input
+							name="delete" type="submit" value="Delete">
+					</form>
+				</div>
+
+				<div class="Cell">${row.index+1}.</div>
+				<div class="Cell">${notificationdetail.notificationTypeCode}</div>
+
+				<div class="Cell">${notificationdetail.organisationdetailsID}</div>
+				<div class="Cell">${notificationdetail.details}</div>
+
+
 			</div>
 		</c:forEach>
 	</div>
