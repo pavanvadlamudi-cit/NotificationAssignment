@@ -5,6 +5,7 @@
 <html>
 <head>
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+<title>Notification details</title>
 </head>
 <body>
 	User name:
