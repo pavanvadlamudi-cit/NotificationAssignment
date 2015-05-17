@@ -12,10 +12,14 @@
 	<sec:authentication property="principal" var="user" />
 	${user.username }
 	<a href="../logout">Logout</a>
-		<c:url var="saveUrl" value="/notificationdetails/edit/${notificationdetails.notificationDetailsID}" />
+		<c:url var="saveUrl" value="/Notification/notificationdetails/save/${notificationdetails.notificationDetailsID}" />
+		<br/>
+		${saveUrl}
+		id: ${notificationdetails.notificationDetailsID}
 		 <form:form id="editnotificationdetailsForm" modelAttribute="notificationdetails" 
 		 method="post"  
-   action="update">  
+   action="${saveUrl}">  
+   		
 		<div class="Table">
 			<div class="Row">
 				<div class="CellNoBorder">
@@ -45,7 +49,7 @@
 			</div>
 			<div class="Row">
 				<div class="CellNoBorder">
-					<input name="create" type="submit" value="Save Changes" />
+					<input name="Update" type="submit" value="Save Changes" />
 				</div>
 				
 			</div>
