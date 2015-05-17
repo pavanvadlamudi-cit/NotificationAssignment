@@ -5,10 +5,11 @@ import ie.cit.afd.models.NotificationTypes;
 
 
 
+
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
-
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ import org.springframework.web.util.UriTemplate;
 
 @Controller
 public class NotificationTypesController {
+	protected static Logger logger = Logger.getLogger("controller");
 	private NotificationTypesRepository ntrepo;
 
 	@Autowired
@@ -86,6 +88,33 @@ public class NotificationTypesController {
 		return ntrepo.getAll();
 	}
 
+	@RequestMapping(value = "/notificationtypes/edit/{id}", method = RequestMethod.GET)
+	public String findById(@PathVariable("id") String id, Model model) {
+
+		logger.debug("Received request to show edit page");
+
+		
+		model.addAttribute("notificationtypes", ntrepo.findById(id));
+
+		
+		return "editnotificationtypes";
+	}
+
+	@RequestMapping(value = "/notificationtypes/save/{id}", method = RequestMethod.POST)
+	public String saveEdit(
+
+	@PathVariable("id") String id, @RequestParam String name, Model model) {
+		logger.debug("**********************save request to show edit page");
+		NotificationTypes notificationtype = ntrepo.findById(id);
+		if (notificationtype != null) {
+			
+			notificationtype.setName(name); 
+			ntrepo.update(notificationtype);
+		}
+		return "redirect:/Notification/notificationtypes";
+	}
+
+	
 	private String getLocationForNotificationTypesResource(
 			NotificationTypes notificationType, HttpServletRequest request) {
 		StringBuffer url = request.getRequestURL();

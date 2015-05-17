@@ -78,8 +78,7 @@
 						</form>
 					</div>
 					<div class="Cell">
-						<a
-							href='notificationdetails/edit/${notificationdetail.notificationDetailsID}'>Edit</a>
+						<a href='notificationdetails/edit/${notificationdetail.notificationDetailsID}'>Edit</a>
 					</div>
 					<div class="Cell">${row.index+1}.</div>
 					<div class="Cell">${notificationdetail.notificationTypeCode}</div>

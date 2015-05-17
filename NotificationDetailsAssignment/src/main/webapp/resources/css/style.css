@@ -41,3 +41,12 @@
 	margin-top: 2%;
 	margin-left: 2%;
 }
+body {
+  background-color: #f1f1f1;
+}
+body, h1, h2, h3, input, p {
+  margin: 0;
+  font-weight: 400;
+  font-family: "Varela Round",sans-serif;
+  color: #34302d;
+}
