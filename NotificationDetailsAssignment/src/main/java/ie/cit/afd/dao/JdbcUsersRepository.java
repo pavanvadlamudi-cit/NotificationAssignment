@@ -1,14 +1,14 @@
 package ie.cit.afd.dao;
 
 import ie.cit.afd.models.UserDetails;
+import ie.cit.afd.models.UserRoles;
 import ie.cit.afd.models.Users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-
-
-
 
 import javax.sql.DataSource;
 
@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,27 +103,42 @@ public class JdbcUsersRepository implements UsersRepository{
 
 		return userDetails;
 	}
+
+	public Collection<GrantedAuthority> getAuthorities(Users users) {
+		List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
+		List<UserRoles> roles= getRolesByUsername(users.getUsername());
+		for (  UserRoles role : roles) {
+		    GrantedAuthority ga=new SimpleGrantedAuthority(role.getRole());
+		    authorities.add(ga);
+		  }
+		return authorities;
+	}
+	public List<UserRoles> getRolesByUsername(String Username){
+		List<UserRoles> userRolesList = new ArrayList<UserRoles>();
+		String sql="SELECT username, role, user_role_id FROM user_roles WHERE  username=?";
+		try {
+			return jdbcTemplate.query(sql, new Object[] { Username },
+							new UserRolesSingleRowMapper());
+			//return userRoles;
+		}
+		catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+
 }
 
 class UsersSingleRowMapper implements RowMapper<Users> {
-
 	public Users mapRow(ResultSet rs, int arg1) throws SQLException {
-
 		String username = rs.getString("username");
 		String password = rs.getString("password");
 		Boolean enabled = rs.getBoolean("enabled");
-
 		Users userDetails = new Users();
 		
 		userDetails.setUsername(username);
 		userDetails.setPassword(password);
 		userDetails.setEnabled(enabled);
-		
 
 		return userDetails;
 	}
 }
-
-	
-
-

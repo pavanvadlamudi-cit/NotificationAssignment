@@ -8,11 +8,16 @@
 <title>Notification types</title>
 </head>
 <body>
-	<div style="display: inline;">
-		User name:
-		<sec:authentication property="principal" var="user" />
-		${user.username}<a href="../logout">Logout</a>
-
+	<sec:authentication property="principal" var="user" />
+	<div class="navbar-inner">
+		
+		<div class="container-fluid">
+			
+			<ul class="nav pull-right">
+				<li class="navbar-link">User name: ${user.username }</li>
+				<li class="navbar-link"><a href="../logout">Logout</a></li>
+			</ul>
+		</div>
 	</div>
 	<h1>Notification Types</h1>
 	<div class="Container">
@@ -69,7 +74,7 @@
 						</form>
 					</div>
 					<div class="Cell">
-						<a
+						<a  class="edit-link"
 							href='notificationtypes/edit/${notificationtype.notificationTypeID}'>Edit</a>
 					</div>
 					<div class="Cell">${row.index+1}.</div>

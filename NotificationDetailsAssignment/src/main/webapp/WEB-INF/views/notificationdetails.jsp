@@ -8,10 +8,16 @@
 <title>Notification details</title>
 </head>
 <body>
-	<div style="display: inline;">
-		User name:
-		<sec:authentication property="principal" var="user" />
-		${user.username } <a href="../logout">Logout</a>
+<sec:authentication property="principal" var="user" />
+	<div class="navbar-inner">
+		
+		<div class="container-fluid">
+			
+			<ul class="nav pull-right">
+				<li class="navbar-link">User name: ${user.username }</li>
+				<li class="navbar-link"><a href="../logout">Logout</a></li>
+			</ul>
+		</div>
 	</div>
 	<div class="Container">
 		<h1>Notification Details</h1>
@@ -78,7 +84,8 @@
 						</form>
 					</div>
 					<div class="Cell">
-						<a href='notificationdetails/edit/${notificationdetail.notificationDetailsID}'>Edit</a>
+						<a class="edit-link"
+							href='notificationdetails/edit/${notificationdetail.notificationDetailsID}'>Edit</a>
 					</div>
 					<div class="Cell">${row.index+1}.</div>
 					<div class="Cell">${notificationdetail.notificationTypeCode}</div>

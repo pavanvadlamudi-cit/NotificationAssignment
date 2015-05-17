@@ -8,11 +8,16 @@
 <title>Edit Notification types</title>
 </head>
 <body>
-	<div style="display: inline;">
-		User name:
-		<sec:authentication property="principal" var="user" />
-		${user.username}&nbsp;<a href="../logout">Logout</a>
-
+	<sec:authentication property="principal" var="user" />
+	<div class="navbar-inner">
+		
+		<div class="container-fluid">
+			
+			<ul class="nav pull-right">
+				<li class="navbar-link">User name: ${user.username }</li>
+				<li class="navbar-link"><a href="../logout">Logout</a></li>
+			</ul>
+		</div>
 	</div>
 	<c:url var="saveUrl"
 		value="/Notification/notificationtypes/save/${notificationtypes.notificationTypeID}" />
@@ -38,6 +43,9 @@
 				<div class="Row">
 					<div class="CellNoBorder">
 						<input name="Update" type="submit" value="Save Changes" />
+					</div>
+					<div class="CellNoBorder">
+						<input name="Cancel" type="button" value="Cancel" onclick="javascript:history.go(-1);" />
 					</div>
 				</div>
 			</div>

@@ -50,3 +50,57 @@ body, h1, h2, h3, input, p {
   font-family: "Varela Round",sans-serif;
   color: #34302d;
 }
+.edit-link {
+  color: #5fa134;
+  font-size: 18px;
+  line-height: 18px;
+}
+.header--navbar .navbar-inner {
+  z-index: 999;
+  background-image: none;
+  filter: none;
+  background-color: #34302d;
+  border: 0;
+  border-top: 4px solid #6db33f;
+  box-shadow: none;
+  position: relative;
+  border-radius: 0;
+  padding: 0;
+}
+.navbar-inner:after, .navbar-inner:before {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+.navbar .nav.pull-right {
+  float: right;
+  margin-right: 0;
+}
+.navbar .nav>li {
+  float: left;
+}
+.navbar-link {
+  color: #777;
+}
+li {
+  line-height: 20px;
+}
+.navbar .nav.pull-right {
+  float: right;
+  margin-right: 0;
+}
+.navbar .nav {
+  position: relative;
+  left: 0;
+  display: block;
+  float: left;
+  margin: 0 10px 0 0;
+}
+.pull-right {
+  float: right;
+}
+.nav {
+  margin-bottom: 20px;
+  margin-left: 0;
+  list-style: none;
+}
