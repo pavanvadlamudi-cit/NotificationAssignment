@@ -81,7 +81,7 @@
 							name="findById" type="submit" value="Edit">
 					</form>
 					
-					<a href='notificationdetails/edit/${notificationdetail.notificationDetailsID}'>Edit</a>
+					<a href='edit/${notificationdetail.notificationDetailsID}'>Edit</a>
 				</div>
 
 				<div class="Cell">${row.index+1}.</div>
