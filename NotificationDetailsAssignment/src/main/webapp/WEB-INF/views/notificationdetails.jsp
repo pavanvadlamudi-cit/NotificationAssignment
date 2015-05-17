@@ -58,7 +58,7 @@
 	<div class="Table">
 		<div class="Heading">
 			<div class="Cell"><!-- Column 1 --></div>
-			<div class="Cell">ID#</div>
+			<div class="Cell">Sl. No.</div>
 			<div class="Cell">Notification code</div>
 			<div class="Cell">Organisation details</div>
 			<div class="Cell">Details</div>
@@ -75,6 +75,13 @@
 						<input name="_method" type="hidden" value="delete"> <input
 							name="delete" type="submit" value="Delete">
 					</form>
+					<form method="post"
+						action="notificationdetails/${notificationdetail.notificationDetailsID}">
+						<input name="_method" type="hidden" value="findById"> <input
+							name="findById" type="submit" value="Edit">
+					</form>
+					
+					<a href='notificationdetails/edit/${notificationdetail.notificationDetailsID}'>Edit</a>
 				</div>
 
 				<div class="Cell">${row.index+1}.</div>

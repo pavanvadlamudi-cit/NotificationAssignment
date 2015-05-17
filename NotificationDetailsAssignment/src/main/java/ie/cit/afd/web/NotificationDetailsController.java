@@ -16,6 +16,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,8 @@ import org.springframework.web.util.UriTemplate;
 
 @Controller
 public class NotificationDetailsController {
+	protected static Logger logger = Logger.getLogger("controller");
+	
 	private NotificationDetailsRepository ntdrepo;
 	@Autowired
     private NotificationTypesRepository ntrepo;
@@ -71,6 +74,39 @@ public class NotificationDetailsController {
 		return "redirect:../notificationdetails";
 	}
 
+	/*@RequestMapping(value = "/notificationdetails/{notificationDetailsID}", method = RequestMethod.POST)
+	public String findById(@PathVariable String notificationDetailsID,Model model) {
+		NotificationDetails notificationDetails =ntdrepo.findById(notificationDetailsID);
+		System.out.println("(notificationDetails != null) "+(notificationDetails != null) );
+		
+		if (notificationDetails != null) {
+			model.addAttribute("editnotificationdetails", notificationDetails);
+			
+		}
+		return "redirect:../editnotificationdetails";
+	}*/
+	
+	
+	@RequestMapping(value="/notificationdetails/edit/{id}", method = RequestMethod.GET)
+    public String findById(@PathVariable("id") String id, Model model){
+		
+		logger.debug("Received request to show edit page");
+	     
+	     // Retrieve person with matching id then add this person to the model
+	     // The editpage.jsp references a model attribute named "personAttribute"
+	     // So we add a "personAttribute" to the model.
+	     // This "personAttribute" will be referenced again once we send the update form data
+	     // We could have chosen a different name like "person" for the model
+	     // If you do, make sure you update the JSP that references this name
+	     // And update the POST method below that receives the request to do the actual update!
+	     model.addAttribute("notificationdetails", ntdrepo.findById(id));
+	      
+	     // The editpage.jsp references a model attribute named "currencies"
+	     // This model attribute is passed automatically when used @ModelAttribute("currencies") earlier
+	      
+	     // This will resolve to /WEB-INF/jsp/editpage.jsp
+	     return "editnotificationdetails";
+	}
 	@RequestMapping(value = "{notificationDetailsID}", method = RequestMethod.PUT)
 	public String update(@RequestParam String id,
 			@RequestParam String notificationTypeID,
