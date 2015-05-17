@@ -107,6 +107,20 @@ public class NotificationDetailsController {
 	     // This will resolve to /WEB-INF/jsp/editpage.jsp
 	     return "editnotificationdetails";
 	}
+	@RequestMapping(value="/notificationdetails/edit/{id}", method = RequestMethod.POST)
+    public String SaveById(@PathVariable("id") String id,@RequestParam String details){
+		
+		logger.debug("Received request to show edit page");
+	     
+	    
+		NotificationDetails notificationDetails = ntdrepo.findById(id);
+		if (notificationDetails != null) {
+			notificationDetails.setDetails(details);
+			notificationDetails.setStatus(true);
+			ntdrepo.update(notificationDetails);
+		}
+	     return "redirect:notificationdetails";
+	}
 	@RequestMapping(value = "{notificationDetailsID}", method = RequestMethod.PUT)
 	public String update(@RequestParam String id,
 			@RequestParam String notificationTypeID,
