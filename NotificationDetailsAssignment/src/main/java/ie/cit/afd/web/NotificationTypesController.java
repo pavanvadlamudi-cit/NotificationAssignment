@@ -4,6 +4,7 @@ import ie.cit.afd.dao.NotificationTypesRepository;
 import ie.cit.afd.models.NotificationTypes;
 
 
+
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,9 +65,9 @@ public class NotificationTypesController {
 		return "redirect:all";
 	}
 	@ModelAttribute("NotificationTypeList")
-	public Map getAllNotificationTypes()
+	public Map<String,String> getAllNotificationTypes()
 	{
-		Map<String,String> referenceData = new HashMap();
+		Map<String,String> referenceData = new HashMap<String, String>();
 		List<NotificationTypes> ntr =ntrepo.getAll();
 		if (ntr!=null){
 			for(Iterator<NotificationTypes> i = ntr.iterator(); i.hasNext();){

@@ -5,7 +5,7 @@ import ie.cit.afd.models.NotificationDetails;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.UUID;
+
 
 import javax.sql.DataSource;
 
@@ -140,10 +140,7 @@ class NotificationDetailsSingleRowMapper implements RowMapper {
 		notificationDetails.setStatus(status);
 		notificationDetails.setNotificationTypeCode(notificationTypeCode);
 		notificationDetails.setOrganisationdetailsName(organisationdetailsName);
-		// notificationTypes.setId(id);
-		// notificationTypes.setName(name);
-		// notificationTypes.setStatus(status);
-
+		
 		return notificationDetails;
 	}
 }
@@ -169,9 +166,7 @@ class NotificationDetailsRowMapper implements RowMapper<NotificationDetails> {
 		notificationDetails.setStatus(status);
 		notificationDetails.setNotificationTypeCode(notificationTypeCode);
 		notificationDetails.setOrganisationdetailsName(organisationdetailsName);
-		// notificationTypes.setId(id);
-		// notificationTypes.setName(name);
-		// notificationTypes.setStatus(status);
+		
 
 		return notificationDetails;
 	}

@@ -4,7 +4,6 @@ import ie.cit.afd.dao.NotificationDetailsRepository;
 import ie.cit.afd.dao.NotificationTypesRepository;
 import ie.cit.afd.dao.OrganisationDetailsRepository;
 import ie.cit.afd.models.NotificationDetails;
-
 import ie.cit.afd.models.NotificationTypes;
 import ie.cit.afd.models.OrganisationDetails;
 
@@ -145,7 +144,7 @@ public class NotificationDetailsController {
 
 	@ModelAttribute("NotificationTypeList")
 	public Map<String, String> getAllNotificationTypes() {
-		Map<String, String> referenceData = new HashMap();
+		Map<String, String> referenceData = new HashMap<String, String>();
 		List<NotificationTypes> ntr = ntrepo.getAll();
 		if (ntr != null) {
 			for (Iterator<NotificationTypes> i = ntr.iterator(); i.hasNext();) {
@@ -159,7 +158,7 @@ public class NotificationDetailsController {
 
 	@ModelAttribute("OrganisationdetailsList")
 	public Map<String, String> getAllOrganisationdetails() {
-		Map<String, String> referenceData = new HashMap();
+		Map<String, String> referenceData = new HashMap<String, String>();
 		List<OrganisationDetails> ntr = odrrepo.getAll();
 		if (ntr != null) {
 			for (Iterator<OrganisationDetails> i = ntr.iterator(); i.hasNext();) {
