@@ -8,92 +8,87 @@
 <title>Notification details</title>
 </head>
 <body>
-	User name:
-	<sec:authentication property="principal" var="user" />
-	${user.username }
-	<a href="../logout">Logout</a>
-	<h1>Notification Details</h1>
-
-	<form method="post" action="notificationdetails">
-		<div class="Table">
-			<div class="Row">
-				<div class="CellNoBorder">
-					Notification type:
-				</div>
-				<div class="CellNoBorder">
-					<form:select path="notificationdetails"
-					name="notificationTypeID">
-					<form:options items="${NotificationTypeList}" />
-				</form:select>
-				</div>
-			</div>
-			<div class="Row">
-				<div class="CellNoBorder">
-					Organisation details:
-				</div>
-				<div class="CellNoBorder">
-				<form:select
-					path="notificationdetails" name="organisationdetailsID">
-					<form:options items="${OrganisationdetailsList}" />
-				</form:select>
-				</div>
-			</div>
-			<div class="Row">
-				<div class="CellNoBorder">
-					Details:
-				</div>
-				<div class="CellNoBorder">
-					<input name="details" type="text" value="" />
-				</div>
-			</div>
-			<div class="Row">
-				<div class="CellNoBorder">
-					<input name="create" type="submit" value="Create" />
-				</div>
-				
-			</div>
-		</div>
-			</form>
-
-	<div class="Table">
-		<div class="Heading">
-			<div class="Cell"><!-- Column 1 --></div>
-			<div class="Cell">Sl. No.</div>
-			<div class="Cell">Notification code</div>
-			<div class="Cell">Organisation details</div>
-			<div class="Cell">Details</div>
-		</div>
-
-		<c:forEach items="${notificationdetails}" var="notificationdetail"
-			varStatus="row">
-			<div class="Row">
-
-
-				<div class="Cell">
-					<form method="post"
-						action="notificationdetails/${notificationdetail.notificationDetailsID}">
-						<input name="_method" type="hidden" value="delete"> <input
-							name="delete" type="submit" value="Delete">
-					</form>
-					<form method="post"
-						action="notificationdetails/${notificationdetail.notificationDetailsID}">
-						<input name="_method" type="hidden" value="findById"> <input
-							name="findById" type="submit" value="Edit">
-					</form>
-					
-					<a href='notificationdetails/edit/${notificationdetail.notificationDetailsID}'>Edit</a>
-				</div>
-
-				<div class="Cell">${row.index+1}.</div>
-				<div class="Cell">${notificationdetail.notificationTypeCode}</div>
-
-				<div class="Cell">${notificationdetail.organisationdetailsName}</div>
-				<div class="Cell">${notificationdetail.details}</div>
-
-
-			</div>
-		</c:forEach>
+	<div style="display: inline;">
+		User name:
+		<sec:authentication property="principal" var="user" />
+		${user.username } <a href="../logout">Logout</a>
 	</div>
+	<div class="Container">
+		<h1>Notification Details</h1>
+		<h2>Add a notifications</h2>
+		<form method="post" action="notificationdetails">
+			<div class="Table">
+				<div class="Row">
+					<div class="CellNoBorder">Notification type:</div>
+					<div class="CellNoBorder">
+						<form:select path="notificationdetails" name="notificationTypeID">
+							<form:options items="${NotificationTypeList}" />
+						</form:select>
+					</div>
+				</div>
+				<div class="Row">
+					<div class="CellNoBorder">Organisation details:</div>
+					<div class="CellNoBorder">
+						<form:select path="notificationdetails"
+							name="organisationdetailsID">
+							<form:options items="${OrganisationdetailsList}" />
+						</form:select>
+					</div>
+				</div>
+				<div class="Row">
+					<div class="CellNoBorder">Details:</div>
+					<div class="CellNoBorder">
+						<input name="details" type="text" value="" />
+					</div>
+				</div>
+				<div class="Row">
+					<div class="CellNoBorder">
+						<input name="create" type="submit" value="Create" />
+					</div>
 
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="Container">
+		<h2>Notification details history</h2>
+
+		<div class="Table">
+			<div class="Heading">
+				<div class="Cell">
+					<!-- Column 1 -->
+				</div>
+				<div class="Cell">
+					<!-- Column 2 -->
+				</div>
+				<div class="Cell">Sl. No.</div>
+				<div class="Cell">Notification code</div>
+				<div class="Cell">Organisation details</div>
+				<div class="Cell">Details</div>
+			</div>
+
+			<c:forEach items="${notificationdetails}" var="notificationdetail"
+				varStatus="row">
+				<div class="Row">
+					<div class="Cell">
+						<form method="post"
+							action="notificationdetails/${notificationdetail.notificationDetailsID}">
+							<input name="_method" type="hidden" value="delete"> <input
+								name="delete" type="submit" value="Delete">
+						</form>
+					</div>
+					<div class="Cell">
+						<a
+							href='notificationdetails/edit/${notificationdetail.notificationDetailsID}'>Edit</a>
+					</div>
+					<div class="Cell">${row.index+1}.</div>
+					<div class="Cell">${notificationdetail.notificationTypeCode}</div>
+
+					<div class="Cell">${notificationdetail.organisationdetailsName}</div>
+					<div class="Cell">${notificationdetail.details}</div>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
 </body>
 </html>

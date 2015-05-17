@@ -12,49 +12,45 @@
 	<sec:authentication property="principal" var="user" />
 	${user.username }
 	<a href="../logout">Logout</a>
-		<c:url var="saveUrl" value="/Notification/notificationdetails/save/${notificationdetails.notificationDetailsID}" />
-		<br/>
-		${saveUrl}
-		id: ${notificationdetails.notificationDetailsID}
-		 <form:form id="editnotificationdetailsForm" modelAttribute="notificationdetails" 
-		 method="post"  
-   action="${saveUrl}">  
-   		
-		<div class="Table">
-			<div class="Row">
-				<div class="CellNoBorder">
-					Notification type:
+	<c:url var="saveUrl"
+		value="/Notification/notificationdetails/save/${notificationdetails.notificationDetailsID}" />
+	<br />
+	<%-- ${saveUrl}
+		id: ${notificationdetails.notificationDetailsID} --%>
+	<div class="Container">
+		<form:form id="editnotificationdetailsForm"
+			modelAttribute="notificationdetails" method="post"
+			action="${saveUrl}">
+
+			<h2>Update notification</h2>
+
+			<div class="Table">
+				<div class="Row">
+					<div class="CellNoBorder">Notification type:</div>
+					<div class="CellNoBorder">
+
+						${notificationdetails.notificationTypeCode}</div>
 				</div>
-				<div class="CellNoBorder">
-				
-					${notificationdetails.notificationTypeCode}
+				<div class="Row">
+					<div class="CellNoBorder">Organisation details:</div>
+					<div class="CellNoBorder">
+						${notificationdetails.organisationdetailsName}</div>
+				</div>
+				<div class="Row">
+					<div class="CellNoBorder">Details:</div>
+					<div class="CellNoBorder">
+						<form:input path="details" value="${notificationdetail.details}" />
+						${notificationdetail.details}
+					</div>
+				</div>
+				<div class="Row">
+					<div class="CellNoBorder">
+						<input name="Update" type="submit" value="Save Changes" />
+					</div>
+
 				</div>
 			</div>
-			<div class="Row">
-				<div class="CellNoBorder">
-					Organisation details:
-				</div>
-				<div class="CellNoBorder">
-					${notificationdetails.organisationdetailsName}
-				</div>
-			</div>
-			<div class="Row">
-				<div class="CellNoBorder">
-					Details:
-				</div>
-				<div class="CellNoBorder">
-					<form:input path="details" value="${notificationdetail.details}" />
-					${notificationdetail.details}
-				</div>
-			</div>
-			<div class="Row">
-				<div class="CellNoBorder">
-					<input name="Update" type="submit" value="Save Changes" />
-				</div>
-				
-			</div>
-		</div>
-			</form:form>
-	
+		</form:form>
+	</div>
 </body>
 </html>

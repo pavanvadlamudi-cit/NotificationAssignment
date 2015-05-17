@@ -5,7 +5,6 @@ import ie.cit.afd.dao.NotificationTypesRepository;
 import ie.cit.afd.dao.OrganisationDetailsRepository;
 import ie.cit.afd.models.NotificationDetails;
 
-
 import ie.cit.afd.models.NotificationTypes;
 import ie.cit.afd.models.OrganisationDetails;
 
@@ -35,12 +34,12 @@ import org.springframework.web.util.UriTemplate;
 @Controller
 public class NotificationDetailsController {
 	protected static Logger logger = Logger.getLogger("controller");
-	
+
 	private NotificationDetailsRepository ntdrepo;
 	@Autowired
-    private NotificationTypesRepository ntrepo;
+	private NotificationTypesRepository ntrepo;
 	@Autowired
-    private OrganisationDetailsRepository odrrepo;
+	private OrganisationDetailsRepository odrrepo;
 
 	@Autowired
 	public NotificationDetailsController(NotificationDetailsRepository ntdrepo) {
@@ -74,56 +73,60 @@ public class NotificationDetailsController {
 		return "redirect:../notificationdetails";
 	}
 
-	/*@RequestMapping(value = "/notificationdetails/{notificationDetailsID}", method = RequestMethod.POST)
-	public String findById(@PathVariable String notificationDetailsID,Model model) {
-		NotificationDetails notificationDetails =ntdrepo.findById(notificationDetailsID);
-		System.out.println("(notificationDetails != null) "+(notificationDetails != null) );
-		
-		if (notificationDetails != null) {
-			model.addAttribute("editnotificationdetails", notificationDetails);
-			
-		}
-		return "redirect:../editnotificationdetails";
-	}*/
-	
-	
-	@RequestMapping(value="/notificationdetails/edit/{id}", method = RequestMethod.GET)
-    public String findById(@PathVariable("id") String id, Model model){
-		
+	/*
+	 * @RequestMapping(value = "/notificationdetails/{notificationDetailsID}",
+	 * method = RequestMethod.POST) public String findById(@PathVariable String
+	 * notificationDetailsID,Model model) { NotificationDetails
+	 * notificationDetails =ntdrepo.findById(notificationDetailsID);
+	 * System.out.println("(notificationDetails != null) "+(notificationDetails
+	 * != null) );
+	 * 
+	 * if (notificationDetails != null) {
+	 * model.addAttribute("editnotificationdetails", notificationDetails);
+	 * 
+	 * } return "redirect:../editnotificationdetails"; }
+	 */
+
+	@RequestMapping(value = "/notificationdetails/edit/{id}", method = RequestMethod.GET)
+	public String findById(@PathVariable("id") String id, Model model) {
+
 		logger.debug("Received request to show edit page");
-	     
-	     // Retrieve person with matching id then add this person to the model
-	     // The editpage.jsp references a model attribute named "personAttribute"
-	     // So we add a "personAttribute" to the model.
-	     // This "personAttribute" will be referenced again once we send the update form data
-	     // We could have chosen a different name like "person" for the model
-	     // If you do, make sure you update the JSP that references this name
-	     // And update the POST method below that receives the request to do the actual update!
-	     model.addAttribute("notificationdetails", ntdrepo.findById(id));
-	      
-	     // The editpage.jsp references a model attribute named "currencies"
-	     // This model attribute is passed automatically when used @ModelAttribute("currencies") earlier
-	      
-	     // This will resolve to /WEB-INF/jsp/editpage.jsp
-	     return "editnotificationdetails";
+
+		// Retrieve person with matching id then add this person to the model
+		// The editpage.jsp references a model attribute named "personAttribute"
+		// So we add a "personAttribute" to the model.
+		// This "personAttribute" will be referenced again once we send the
+		// update form data
+		// We could have chosen a different name like "person" for the model
+		// If you do, make sure you update the JSP that references this name
+		// And update the POST method below that receives the request to do the
+		// actual update!
+		model.addAttribute("notificationdetails", ntdrepo.findById(id));
+
+		// The editpage.jsp references a model attribute named "currencies"
+		// This model attribute is passed automatically when used
+		// @ModelAttribute("currencies") earlier
+
+		// This will resolve to /WEB-INF/jsp/editpage.jsp
+		return "editnotificationdetails";
 	}
+
 	@RequestMapping(value = "/notificationdetails/save/{id}", method = RequestMethod.POST)
-    public String saveEdit(
-    		 
-    		@PathVariable("id") String id,
-    		@RequestParam String details,
-      Model model) {
+	public String saveEdit(
+
+	@PathVariable("id") String id, @RequestParam String details, Model model) {
 		logger.debug("**********************save request to show edit page");
 		NotificationDetails notificationDetails = ntdrepo.findById(id);
 		if (notificationDetails != null) {
-			//notificationDetails.setNotificationTypeID(notificationTypeID);
-			//notificationDetails.setOrganisationdetailsID(organisationdetailsID);
+			// notificationDetails.setNotificationTypeID(notificationTypeID);
+			// notificationDetails.setOrganisationdetailsID(organisationdetailsID);
 			notificationDetails.setDetails(details);
 			notificationDetails.setStatus(true);
 			ntdrepo.update(notificationDetails);
 		}
 		return "redirect:/Notification/notificationdetails";
-		}
+	}
+
 	@RequestMapping(value = "{notificationDetailsID}", method = RequestMethod.PUT)
 	public String update(@RequestParam String id,
 			@RequestParam String notificationTypeID,
@@ -139,43 +142,44 @@ public class NotificationDetailsController {
 		}
 		return "redirect:all";
 	}
-	
+
 	@ModelAttribute("NotificationTypeList")
-	public Map<String,String> getAllNotificationTypes()
-	{
-		Map<String,String> referenceData = new HashMap();
-		List<NotificationTypes> ntr =ntrepo.getAll();
-		if (ntr!=null){
-			for(Iterator<NotificationTypes> i = ntr.iterator(); i.hasNext();){
+	public Map<String, String> getAllNotificationTypes() {
+		Map<String, String> referenceData = new HashMap();
+		List<NotificationTypes> ntr = ntrepo.getAll();
+		if (ntr != null) {
+			for (Iterator<NotificationTypes> i = ntr.iterator(); i.hasNext();) {
 				NotificationTypes nt = i.next();
-				referenceData.put(nt.getNotificationTypeID(),nt.getCode()+" - " + nt.getName()
-						);
+				referenceData.put(nt.getNotificationTypeID(), nt.getCode()
+						+ " - " + nt.getName());
 			}
 		}
 		return referenceData;
 	}
-	
+
 	@ModelAttribute("OrganisationdetailsList")
-	public Map<String,String> getAllOrganisationdetails()
-	{
-		Map<String,String> referenceData = new HashMap();
+	public Map<String, String> getAllOrganisationdetails() {
+		Map<String, String> referenceData = new HashMap();
 		List<OrganisationDetails> ntr = odrrepo.getAll();
-		if (ntr!=null){
-			for(Iterator<OrganisationDetails> i = ntr.iterator(); i.hasNext();){
+		if (ntr != null) {
+			for (Iterator<OrganisationDetails> i = ntr.iterator(); i.hasNext();) {
 				OrganisationDetails od = i.next();
-				referenceData.put(od.getOrganisationDetailsID(),od.getName());
+				referenceData.put(od.getOrganisationDetailsID(), od.getName());
 			}
 		}
 		return referenceData;
 	}
+
 	// REST end-points
-		// curl
-		// http://localhost:8081/NotificationDetailsAssignment/Notification/notificationtypes
-		@RequestMapping(value = { "/notificationdetails/all", "/notificationdetails" }, method = RequestMethod.GET, produces = "application/json")
-		@ResponseStatus(HttpStatus.OK)
-		public @ResponseBody List<NotificationDetails> getAllNotificationDetailsItems() {
-			return ntdrepo.getAll();
-		}
+	// curl
+	// http://localhost:8081/NotificationDetailsAssignment/Notification/notificationtypes
+	@RequestMapping(value = { "/notificationdetails/all",
+			"/notificationdetails" }, method = RequestMethod.GET, produces = "application/json")
+	@ResponseStatus(HttpStatus.OK)
+	public @ResponseBody List<NotificationDetails> getAllNotificationDetailsItems() {
+		return ntdrepo.getAll();
+	}
+
 	private String getLocationForNotificationDetailsResource(
 			NotificationDetails notificationDetails, HttpServletRequest request) {
 		StringBuffer url = request.getRequestURL();
