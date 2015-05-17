@@ -6,18 +6,17 @@ public class NotificationDetails {
 	String notificationDetailsID;
 	String notificationTypeID;
 	String notificationTypeCode;
-	
 
 	String organisationdetailsID;
 	String organisationdetailsName;
-	
 
 	String details;
 	boolean status;
-	public NotificationDetails(){
-		this.notificationDetailsID = UUID.randomUUID().toString();	
+
+	public NotificationDetails() {
+		this.notificationDetailsID = UUID.randomUUID().toString();
 	}
-	
+
 	public String getOrganisationdetailsName() {
 		return organisationdetailsName;
 	}
@@ -25,6 +24,7 @@ public class NotificationDetails {
 	public void setOrganisationdetailsName(String organisationdetailsName) {
 		this.organisationdetailsName = organisationdetailsName;
 	}
+
 	public String getNotificationTypeCode() {
 		return notificationTypeCode;
 	}
@@ -32,6 +32,7 @@ public class NotificationDetails {
 	public void setNotificationTypeCode(String notificationTypeCode) {
 		this.notificationTypeCode = notificationTypeCode;
 	}
+
 	public String getNotificationDetailsID() {
 		return notificationDetailsID;
 	}
@@ -76,9 +77,8 @@ public class NotificationDetails {
 	public String toString() {
 		return "NotificationDetails [NotificationDetailsID="
 				+ notificationDetailsID + ", NotificationTypeID="
-				+ notificationTypeID +", notificationTypeName=" 
-				+ notificationTypeCode  
-				+ " Details=" + details + ", Status="
+				+ notificationTypeID + ", notificationTypeName="
+				+ notificationTypeCode + " Details=" + details + ", Status="
 				+ status + "]";
 	}
 

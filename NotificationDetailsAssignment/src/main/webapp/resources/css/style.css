@@ -104,3 +104,8 @@ li {
   margin-left: 0;
   list-style: none;
 }
+.right-pane-widget--container {
+  border: 1px solid #ccc;
+  box-shadow: 0 -4px 0 #34302d;
+  margin: 4px 0 40px;
+}

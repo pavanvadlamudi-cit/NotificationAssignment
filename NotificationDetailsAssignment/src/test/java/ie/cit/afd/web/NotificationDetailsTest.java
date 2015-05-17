@@ -1,4 +1,5 @@
 package ie.cit.afd.web;
+
 import ie.cit.afd.dao.NotificationDetailsRepository;
 import ie.cit.afd.models.NotificationDetails;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -20,13 +21,14 @@ import org.springframework.ui.ExtendedModelMap;
 public class NotificationDetailsTest {
 	private NotificationDetailsRepository repo;
 	private NotificationDetailsController tested;
+
 	@Before
 	public void setup() {
 		repo = mock(NotificationDetailsRepository.class);
 		tested = new NotificationDetailsController(repo);
-		
+
 	}
-	
+
 	@Test
 	public void testGetAll() {
 		List<NotificationDetails> all = tested.getAllNotificationDetailsItems();
@@ -45,21 +47,27 @@ public class NotificationDetailsTest {
 
 	@Test
 	public void testCreate() {
-		tested.create(" NF01","AbbeyBreaffy Nursing Home","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac justo volutpat, interdum");
+		tested.create(
+				" NF01",
+				"AbbeyBreaffy Nursing Home",
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac justo volutpat, interdum");
 		Mockito.verify(repo).insert(
 				Matchers.argThat(new ArgumentMatcher<NotificationDetails>() {
 
 					@Override
 					public boolean matches(Object argument) {
-						return ((NotificationDetails) argument).getOrganisationdetailsID().equals("AbbeyBreaffy Nursing Home");
+						return ((NotificationDetails) argument)
+								.getOrganisationdetailsID().equals(
+										"AbbeyBreaffy Nursing Home");
 					}
 
 					@Override
 					public void describeTo(Description description) {
-						description.appendText("expected: some AbbeyBreaffy Nursing Home");
+						description
+								.appendText("expected: some AbbeyBreaffy Nursing Home");
 					}
 				}));
 
 	}
-	
+
 }

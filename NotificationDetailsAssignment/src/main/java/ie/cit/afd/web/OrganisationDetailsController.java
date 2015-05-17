@@ -3,8 +3,6 @@ package ie.cit.afd.web;
 import ie.cit.afd.dao.OrganisationDetailsRepository;
 import ie.cit.afd.models.OrganisationDetails;
 
-
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;

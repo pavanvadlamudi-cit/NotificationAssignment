@@ -24,52 +24,50 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public class JdbcUsersRepository implements UsersRepository{
+public class JdbcUsersRepository implements UsersRepository {
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
 	public JdbcUsersRepository(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	
+
 	public void insert(Users users) {
 		String password;
-		password =new BCryptPasswordEncoder().encode(users.getPassword());
+		password = new BCryptPasswordEncoder().encode(users.getPassword());
 		jdbcTemplate.update("INSERT INTO users("
-            +"username, password, enabled)  VALUES (?, ?, ?)",
-            users.getUsername(), password,users.isEnabled());
+				+ "username, password, enabled)  VALUES (?, ?, ?)",
+				users.getUsername(), password, users.isEnabled());
 
 	}
 
 	public void update(Users users) {
 		String password;
-		password =new BCryptPasswordEncoder().encode(users.getPassword());
-		jdbcTemplate.update("update users set password=? where username=?"
-            ,password,
-            users.getUsername());
-		
+		password = new BCryptPasswordEncoder().encode(users.getPassword());
+		jdbcTemplate.update("update users set password=? where username=?",
+				password, users.getUsername());
+
 	}
 
 	public void delete(Users users) {
 		jdbcTemplate.update("delete users where username=?",
-	               users.getUsername());
-		
+				users.getUsername());
+
 	}
 
 	public void delete(String username) {
-		jdbcTemplate.update("delete users where username=?",
-				username);
-		
+		jdbcTemplate.update("delete users where username=?", username);
+
 	}
+
 	@Transactional(readOnly = true)
 	public Users findByUsername(String Username) {
 		String sql = "select username,  password,  enabled "
 				+ " from users where username=?";
 		try {
 			Users users;
-			users = (Users) jdbcTemplate
-					.queryForObject(sql, new Object[] { Username },
-							new UsersSingleRowMapper());
+			users = (Users) jdbcTemplate.queryForObject(sql,
+					new Object[] { Username }, new UsersSingleRowMapper());
 
 			return users;
 		}
@@ -78,14 +76,14 @@ public class JdbcUsersRepository implements UsersRepository{
 			return null;
 		}
 	}
+
 	@Transactional(readOnly = true)
 	public List<Users> getAll() {
-		return jdbcTemplate.query("select "
-						+ "username,  password,  enabled"
-						+ " from users", new UsersSingleRowMapper());
-		
+		return jdbcTemplate.query("select " + "username,  password,  enabled"
+				+ " from users", new UsersSingleRowMapper());
+
 	}
-	
+
 	public UserDetails mapRow(ResultSet rs, int arg1) throws SQLException {
 
 		String userDetailsID = rs.getString("userdetailsid");
@@ -105,23 +103,23 @@ public class JdbcUsersRepository implements UsersRepository{
 	}
 
 	public Collection<GrantedAuthority> getAuthorities(Users users) {
-		List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
-		List<UserRoles> roles= getRolesByUsername(users.getUsername());
-		for (  UserRoles role : roles) {
-		    GrantedAuthority ga=new SimpleGrantedAuthority(role.getRole());
-		    authorities.add(ga);
-		  }
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		List<UserRoles> roles = getRolesByUsername(users.getUsername());
+		for (UserRoles role : roles) {
+			GrantedAuthority ga = new SimpleGrantedAuthority(role.getRole());
+			authorities.add(ga);
+		}
 		return authorities;
 	}
-	public List<UserRoles> getRolesByUsername(String Username){
+
+	public List<UserRoles> getRolesByUsername(String Username) {
 		List<UserRoles> userRolesList = new ArrayList<UserRoles>();
-		String sql="SELECT username, role, user_role_id FROM user_roles WHERE  username=?";
+		String sql = "SELECT username, role, user_role_id FROM user_roles WHERE  username=?";
 		try {
 			return jdbcTemplate.query(sql, new Object[] { Username },
-							new UserRolesSingleRowMapper());
-			//return userRoles;
-		}
-		catch (EmptyResultDataAccessException e) {
+					new UserRolesSingleRowMapper());
+			// return userRoles;
+		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
@@ -134,7 +132,7 @@ class UsersSingleRowMapper implements RowMapper<Users> {
 		String password = rs.getString("password");
 		Boolean enabled = rs.getBoolean("enabled");
 		Users userDetails = new Users();
-		
+
 		userDetails.setUsername(username);
 		userDetails.setPassword(password);
 		userDetails.setEnabled(enabled);

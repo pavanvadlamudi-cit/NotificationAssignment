@@ -19,5 +19,6 @@ public interface UsersRepository {
 	Users findByUsername(String Username);
 
 	List<Users> getAll();
+
 	Collection<GrantedAuthority> getAuthorities(Users users);
 }

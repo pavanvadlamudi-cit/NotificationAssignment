@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +35,17 @@ public class JdbcNotificationDetailsRepository implements
 		jdbcTemplate
 				.update("insert into notificationdetails"
 						+ "(notificationdetailsid,notificationtypeid,organisationdetailsid,details,status) "
-						+ " values (?,?,?,?,?)", notificationDetails.getNotificationDetailsID(),
+						+ " values (?,?,?,?,?)",
+						notificationDetails.getNotificationDetailsID(),
 						notificationDetails.getNotificationTypeID(),
 						notificationDetails.getOrganisationdetailsID(),
 						notificationDetails.getDetails(),
 						notificationDetails.isStatus());
-		jdbcTemplate.update("insert into owners(notificationdetailsid, username) values(?,?)",
-				notificationDetails.getNotificationDetailsID(), 
-				SecurityContextHolder.getContext().getAuthentication().getName());
+		jdbcTemplate
+				.update("insert into owners(notificationdetailsid, username) values(?,?)",
+						notificationDetails.getNotificationDetailsID(),
+						SecurityContextHolder.getContext().getAuthentication()
+								.getName());
 	}
 
 	public void update(NotificationDetails notificationDetails) {
@@ -65,6 +67,7 @@ public class JdbcNotificationDetailsRepository implements
 				+ " where notificationdetailsid=?",
 				notificationDetails.getNotificationDetailsID());
 	}
+
 	@Transactional(readOnly = true)
 	public List<NotificationDetails> getAll() {
 		// may be i need a join
@@ -76,12 +79,13 @@ public class JdbcNotificationDetailsRepository implements
 						+ "inner join organisationdetails ord on "
 						+ "ntd.organisationdetailsid = ord.organisationdetailsid "
 						+ "inner join owners ow on "
-								+ "ntd.notificationdetailsid = ow.notificationdetailsid "
-								+ "where ow.username = ? ",
-								new Object[] { 
-										SecurityContextHolder.getContext().getAuthentication().getName() },
+						+ "ntd.notificationdetailsid = ow.notificationdetailsid "
+						+ "where ow.username = ? ",
+						new Object[] { SecurityContextHolder.getContext()
+								.getAuthentication().getName() },
 						new NotificationDetailsRowMapper());
 	}
+
 	@Transactional(readOnly = true)
 	public NotificationDetails findById(String notificationDetailsId) {
 		String sql = "select ntd.notificationdetailsid,ntd.notificationtypeid,nt.code,ord.name,"
@@ -96,9 +100,10 @@ public class JdbcNotificationDetailsRepository implements
 		try {
 			NotificationDetails notificationDetails;
 			notificationDetails = (NotificationDetails) jdbcTemplate
-					.queryForObject(sql,
-							new Object[] { notificationDetailsId,
-							SecurityContextHolder.getContext().getAuthentication().getName() },
+					.queryForObject(sql, new Object[] {
+							notificationDetailsId,
+							SecurityContextHolder.getContext()
+									.getAuthentication().getName() },
 							new NotificationDetailsSingleRowMapper());
 
 			return notificationDetails;
@@ -111,8 +116,9 @@ public class JdbcNotificationDetailsRepository implements
 
 	public void delete(String id) {
 		jdbcTemplate.update("delete from owners "
-				+ " where notificationdetailsid=? and username=?"
-				, id,SecurityContextHolder.getContext().getAuthentication().getName());
+				+ " where notificationdetailsid=? and username=?", id,
+				SecurityContextHolder.getContext().getAuthentication()
+						.getName());
 		jdbcTemplate.update("delete from notificationdetails "
 				+ " where notificationdetailsid=?", id);
 
@@ -140,7 +146,7 @@ class NotificationDetailsSingleRowMapper implements RowMapper {
 		notificationDetails.setStatus(status);
 		notificationDetails.setNotificationTypeCode(notificationTypeCode);
 		notificationDetails.setOrganisationdetailsName(organisationdetailsName);
-		
+
 		return notificationDetails;
 	}
 }
@@ -157,7 +163,7 @@ class NotificationDetailsRowMapper implements RowMapper<NotificationDetails> {
 		Boolean status = rs.getBoolean("status");
 		String notificationTypeCode = rs.getString("code");
 		String organisationdetailsName = rs.getString("name");
-		
+
 		NotificationDetails notificationDetails = new NotificationDetails();
 		notificationDetails.setNotificationDetailsID(notificationDetailsID);
 		notificationDetails.setNotificationTypeID(notificationTypeID);
@@ -166,7 +172,6 @@ class NotificationDetailsRowMapper implements RowMapper<NotificationDetails> {
 		notificationDetails.setStatus(status);
 		notificationDetails.setNotificationTypeCode(notificationTypeCode);
 		notificationDetails.setOrganisationdetailsName(organisationdetailsName);
-		
 
 		return notificationDetails;
 	}

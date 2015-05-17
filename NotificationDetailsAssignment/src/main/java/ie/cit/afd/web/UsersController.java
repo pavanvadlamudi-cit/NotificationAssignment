@@ -1,4 +1,5 @@
 package ie.cit.afd.web;
+
 import ie.cit.afd.dao.UsersRepository;
 import ie.cit.afd.models.Users;
 
@@ -25,6 +26,7 @@ public class UsersController {
 	public UsersController(UsersRepository usrrepo) {
 		this.usrrepo = usrrepo;
 	}
+
 	@RequestMapping(value = { "/users", "/users/all" }, method = RequestMethod.GET)
 	public String getAll(Model model) {
 		model.addAttribute("users", usrrepo.getAll());
@@ -38,7 +40,8 @@ public class UsersController {
 		Users users = new Users();
 		users.setUsername(username);
 		users.setPassword(password);
-		users.setEnabled(true);;
+		users.setEnabled(true);
+
 		usrrepo.insert(users);
 		return "users";
 	}
@@ -49,7 +52,7 @@ public class UsersController {
 		return "redirect:../users";
 	}
 
-	@RequestMapping(value = "/userdetails/{username}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/users/{username}", method = RequestMethod.PUT)
 	public String update(@RequestParam String userDetailsID,
 			@RequestParam String username, @RequestParam String password,
 			@RequestParam String organisationDetailsID,
@@ -69,8 +72,7 @@ public class UsersController {
 		StringBuffer url = request.getRequestURL();
 		UriTemplate template = new UriTemplate(url.append("/{childId}")
 				.toString());
-		return template.expand(users.getUsername(), template)
-				.toASCIIString();
+		return template.expand(users.getUsername(), template).toASCIIString();
 	}
 
 	// Exception handler for findById if "Todo" item does not exist in repo

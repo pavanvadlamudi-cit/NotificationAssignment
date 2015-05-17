@@ -54,6 +54,7 @@ public class JdbcUserDetailsRepository implements UserDetailsRepository {
 				+ "where userdetailsid=?", userDetails.getUserDetailsID());
 
 	}
+
 	@Transactional(readOnly = true)
 	public List<UserDetails> getAll() {
 		return jdbcTemplate
@@ -62,6 +63,7 @@ public class JdbcUserDetailsRepository implements UserDetailsRepository {
 						+ " from userdetails", new UserDetailsRowMapper());
 
 	}
+
 	@Transactional(readOnly = true)
 	public UserDetails findByusername(String username) {
 		String sql = "select userdetailsid,  username,  password,  organisationdetailsid,  status "
@@ -86,6 +88,7 @@ public class JdbcUserDetailsRepository implements UserDetailsRepository {
 				+ "where userdetailsid=?", id);
 
 	}
+
 	@Transactional(readOnly = true)
 	public UserDetails findById(String id) {
 		String sql = "select userdetailsid,  username,  password,  organisationdetailsid,  status "

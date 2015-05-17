@@ -3,9 +3,6 @@ package ie.cit.afd.web;
 import ie.cit.afd.dao.NotificationTypesRepository;
 import ie.cit.afd.models.NotificationTypes;
 
-
-
-
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,19 +63,21 @@ public class NotificationTypesController {
 		ntrepo.update(notificationType);
 		return "redirect:all";
 	}
+
 	@ModelAttribute("NotificationTypeList")
-	public Map<String,String> getAllNotificationTypes()
-	{
-		Map<String,String> referenceData = new HashMap<String, String>();
-		List<NotificationTypes> ntr =ntrepo.getAll();
-		if (ntr!=null){
-			for(Iterator<NotificationTypes> i = ntr.iterator(); i.hasNext();){
+	public Map<String, String> getAllNotificationTypes() {
+		Map<String, String> referenceData = new HashMap<String, String>();
+		List<NotificationTypes> ntr = ntrepo.getAll();
+		if (ntr != null) {
+			for (Iterator<NotificationTypes> i = ntr.iterator(); i.hasNext();) {
 				NotificationTypes nt = i.next();
-				referenceData.put(nt.getNotificationTypeID(),nt.getCode()+" - " + nt.getName());
+				referenceData.put(nt.getNotificationTypeID(), nt.getCode()
+						+ " - " + nt.getName());
 			}
 		}
 		return referenceData;
 	}
+
 	// REST end-points
 	// curl
 	// http://localhost:8081/NotificationDetailsAssignment/Notification/notificationtypes
@@ -93,10 +92,8 @@ public class NotificationTypesController {
 
 		logger.debug("Received request to show edit page");
 
-		
 		model.addAttribute("notificationtypes", ntrepo.findById(id));
 
-		
 		return "editnotificationtypes";
 	}
 
@@ -107,14 +104,13 @@ public class NotificationTypesController {
 		logger.debug("**********************save request to show edit page");
 		NotificationTypes notificationtype = ntrepo.findById(id);
 		if (notificationtype != null) {
-			
-			notificationtype.setName(name); 
+
+			notificationtype.setName(name);
 			ntrepo.update(notificationtype);
 		}
 		return "redirect:/Notification/notificationtypes";
 	}
 
-	
 	private String getLocationForNotificationTypesResource(
 			NotificationTypes notificationType, HttpServletRequest request) {
 		StringBuffer url = request.getRequestURL();

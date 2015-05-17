@@ -1,4 +1,5 @@
 package ie.cit.afd.config;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,28 +12,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig  extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	DataSource ds;
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/Notification/**")
-		.hasRole("USER")
-		.and()
-		.formLogin().defaultSuccessUrl("/Notification/notificationdetails")
-		.and()
-		.httpBasic()
-		.and()
-		.csrf().disable();
+				.hasRole("USER").and().formLogin()
+				.defaultSuccessUrl("/Notification/notificationdetails").and()
+				.httpBasic().and().csrf().disable();
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
-		
-		auth.jdbcAuthentication().dataSource(ds).passwordEncoder(new BCryptPasswordEncoder());
-		
+
+		auth.jdbcAuthentication().dataSource(ds)
+				.passwordEncoder(new BCryptPasswordEncoder());
+
 	}
 
 }

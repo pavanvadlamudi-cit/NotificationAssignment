@@ -50,6 +50,7 @@ public class JdbcOrganisationDetailsRepository implements
 				organisationDetails.getOrganisationDetailsID());
 
 	}
+
 	@Transactional(readOnly = true)
 	public OrganisationDetails findByname(String name) {
 
@@ -68,6 +69,7 @@ public class JdbcOrganisationDetailsRepository implements
 			return null;
 		}
 	}
+
 	@Transactional(readOnly = true)
 	public List<OrganisationDetails> getAll() {
 		return jdbcTemplate.query(
@@ -81,6 +83,7 @@ public class JdbcOrganisationDetailsRepository implements
 				+ " where organisationdetailsid=?", id);
 
 	}
+
 	@Transactional(readOnly = true)
 	public OrganisationDetails findById(String id) {
 		String sql = "select organisationdetailsid,  name,  status "

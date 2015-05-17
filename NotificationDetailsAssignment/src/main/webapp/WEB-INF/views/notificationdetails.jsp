@@ -57,6 +57,8 @@
 		</form>
 	</div>
 	<div class="Container">
+		<div style="display:block;float:left;margin:5px;padding:5px;">
+			<div class="Container">
 		<h2>Notification details history</h2>
 
 		<div class="Table">
@@ -96,5 +98,29 @@
 			</c:forEach>
 		</div>
 	</div>
+		</div>
+		<div style="display:block;float:right;margin:5px;padding:5px;width:20%">
+			<c:if test="${user.username=='admin'}">
+			<div class="right-pane-widget--container">
+				<ul style="display:block;list-style:none;">
+					<li>
+						<a href="notificationdetails">Notification details</a>
+					</li>
+					<li>
+						<a href="notificationtypes">Notification types</a>
+					</li>
+					<li>
+						<a href="organisationdetails">Organisation details</a>
+					</li>
+					<li>
+						<a href="users">User details</a>
+					</li>
+					
+				</ul>
+			</div>
+			</c:if>
+		</div>
+	</div>
+	
 </body>
 </html>
