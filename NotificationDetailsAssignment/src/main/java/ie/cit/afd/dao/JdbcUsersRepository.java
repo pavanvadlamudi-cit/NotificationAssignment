@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 
+
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 public class JdbcUsersRepository implements UsersRepository{
 	private JdbcTemplate jdbcTemplate;
 
@@ -55,7 +59,7 @@ public class JdbcUsersRepository implements UsersRepository{
 				username);
 		
 	}
-
+	@Transactional(readOnly = true)
 	public Users findByUsername(String Username) {
 		String sql = "select username,  password,  enabled "
 				+ " from users where username=?";
@@ -72,12 +76,14 @@ public class JdbcUsersRepository implements UsersRepository{
 			return null;
 		}
 	}
-
+	@Transactional(readOnly = true)
 	public List<Users> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query("select "
+						+ "username,  password,  enabled"
+						+ " from users", new UsersSingleRowMapper());
+		
 	}
-
+	
 	public UserDetails mapRow(ResultSet rs, int arg1) throws SQLException {
 
 		String userDetailsID = rs.getString("userdetailsid");

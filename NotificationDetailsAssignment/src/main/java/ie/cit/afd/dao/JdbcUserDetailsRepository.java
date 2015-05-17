@@ -14,8 +14,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 public class JdbcUserDetailsRepository implements UserDetailsRepository {
 	private JdbcTemplate jdbcTemplate;
 
@@ -52,7 +54,7 @@ public class JdbcUserDetailsRepository implements UserDetailsRepository {
 				+ "where userdetailsid=?", userDetails.getUserDetailsID());
 
 	}
-
+	@Transactional(readOnly = true)
 	public List<UserDetails> getAll() {
 		return jdbcTemplate
 				.query("select "
@@ -60,7 +62,7 @@ public class JdbcUserDetailsRepository implements UserDetailsRepository {
 						+ " from userdetails", new UserDetailsRowMapper());
 
 	}
-
+	@Transactional(readOnly = true)
 	public UserDetails findByusername(String username) {
 		String sql = "select userdetailsid,  username,  password,  organisationdetailsid,  status "
 				+ " from userdetails where username=?";
@@ -84,7 +86,7 @@ public class JdbcUserDetailsRepository implements UserDetailsRepository {
 				+ "where userdetailsid=?", id);
 
 	}
-
+	@Transactional(readOnly = true)
 	public UserDetails findById(String id) {
 		String sql = "select userdetailsid,  username,  password,  organisationdetailsid,  status "
 				+ " from userdetails where userdetailsid=?";

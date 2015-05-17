@@ -15,8 +15,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 public class JdbcNotificationDetailsRepository implements
 		NotificationDetailsRepository {
 	private JdbcTemplate jdbcTemplate;
@@ -63,7 +65,7 @@ public class JdbcNotificationDetailsRepository implements
 				+ " where notificationdetailsid=?",
 				notificationDetails.getNotificationDetailsID());
 	}
-
+	@Transactional(readOnly = true)
 	public List<NotificationDetails> getAll() {
 		// may be i need a join
 		return jdbcTemplate
@@ -80,7 +82,7 @@ public class JdbcNotificationDetailsRepository implements
 										SecurityContextHolder.getContext().getAuthentication().getName() },
 						new NotificationDetailsRowMapper());
 	}
-
+	@Transactional(readOnly = true)
 	public NotificationDetails findById(String notificationDetailsId) {
 		String sql = "select ntd.notificationdetailsid,ntd.notificationtypeid,nt.code,ord.name,"
 				+ "ntd.organisationdetailsid,ntd.details,	ntd.status from notificationdetails"

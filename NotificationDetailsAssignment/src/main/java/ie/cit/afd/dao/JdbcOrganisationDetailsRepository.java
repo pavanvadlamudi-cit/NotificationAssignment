@@ -14,8 +14,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 public class JdbcOrganisationDetailsRepository implements
 		OrganisationDetailsRepository {
 	private JdbcTemplate jdbcTemplate;
@@ -48,7 +50,7 @@ public class JdbcOrganisationDetailsRepository implements
 				organisationDetails.getOrganisationDetailsID());
 
 	}
-
+	@Transactional(readOnly = true)
 	public OrganisationDetails findByname(String name) {
 
 		String sql = "select organisationdetailsid,  name,  status "
@@ -66,7 +68,7 @@ public class JdbcOrganisationDetailsRepository implements
 			return null;
 		}
 	}
-
+	@Transactional(readOnly = true)
 	public List<OrganisationDetails> getAll() {
 		return jdbcTemplate.query(
 				"select organisationdetailsid,  name,  status"
@@ -79,7 +81,7 @@ public class JdbcOrganisationDetailsRepository implements
 				+ " where organisationdetailsid=?", id);
 
 	}
-
+	@Transactional(readOnly = true)
 	public OrganisationDetails findById(String id) {
 		String sql = "select organisationdetailsid,  name,  status "
 				+ " from organisationdetails where organisationdetailsid=?";

@@ -14,8 +14,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 public class JdbcNotificationTypesRepository implements
 		NotificationTypesRepository {
 	private JdbcTemplate jdbcTemplate;
@@ -49,13 +51,13 @@ public class JdbcNotificationTypesRepository implements
 				notificationTypes.getNotificationTypeID());
 
 	}
-
+	@Transactional(readOnly = true)
 	public List<NotificationTypes> getAll() {
 		return jdbcTemplate.query("select notificationtypeid,name,code,status"
 				+ " from notificationtypes", new NotificationTypesRowMapper());
 
 	}
-
+	@Transactional(readOnly = true)
 	public NotificationTypes findBycode(String code) {
 
 		String sql = "select notificationtypeid,name,code,status"
@@ -79,7 +81,7 @@ public class JdbcNotificationTypesRepository implements
 				"delete from notificationtypes where notificationtypeid=?", id);
 
 	}
-
+	@Transactional(readOnly = true)
 	public NotificationTypes findById(String notificationtypeid) {
 		String sql = "select notificationtypeid,name,code,status"
 				+ " from notificationtypes where notificationtypeid=?";
