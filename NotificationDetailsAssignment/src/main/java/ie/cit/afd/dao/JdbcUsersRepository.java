@@ -49,12 +49,6 @@ public class JdbcUsersRepository implements UsersRepository {
 
 	}
 
-	public void delete(Users users) {
-		jdbcTemplate.update("delete users where username=?",
-				users.getUsername());
-
-	}
-
 	public void delete(String username) {
 		jdbcTemplate.update("delete users where username=?", username);
 
@@ -122,6 +116,12 @@ public class JdbcUsersRepository implements UsersRepository {
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
+	}
+
+	public void delete(Users users) {
+		jdbcTemplate.update("delete users where username=?", users.getUsername());
+
+		
 	}
 
 }

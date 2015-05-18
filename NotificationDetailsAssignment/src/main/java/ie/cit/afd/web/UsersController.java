@@ -1,10 +1,12 @@
 package ie.cit.afd.web;
 
 import ie.cit.afd.dao.UsersRepository;
+import ie.cit.afd.models.NotificationTypes;
 import ie.cit.afd.models.Users;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -21,7 +23,7 @@ import org.springframework.web.util.UriTemplate;
 @Controller
 public class UsersController {
 	private UsersRepository usrrepo;
-
+	protected static Logger logger = Logger.getLogger("controller");
 	@Autowired
 	public UsersController(UsersRepository usrrepo) {
 		this.usrrepo = usrrepo;
@@ -67,6 +69,30 @@ public class UsersController {
 		return "redirect:all";
 	}
 
+	@RequestMapping(value = "/users/edit/{username}", method = RequestMethod.GET)
+	public String findById(@PathVariable("username") String username, Model model) {
+
+		logger.debug("Received request to show edit page");
+
+		model.addAttribute("users", usrrepo.findByUsername(username));
+
+		return "editusers";
+	}
+
+	@RequestMapping(value = "/users/save/{id}", method = RequestMethod.POST)
+	public String saveEdit(
+
+	@PathVariable("id") String username, @RequestParam String password, Model model) {
+		logger.debug("**********************save request to show edit page");
+		Users users = usrrepo.findByUsername(username);
+		if (users != null) {
+
+			users.setPassword(password);
+			usrrepo.update(users);
+		}
+		return "redirect:/Notification/users";
+	}
+	
 	private String getLocationForUsersResource(Users users,
 			HttpServletRequest request) {
 		StringBuffer url = request.getRequestURL();

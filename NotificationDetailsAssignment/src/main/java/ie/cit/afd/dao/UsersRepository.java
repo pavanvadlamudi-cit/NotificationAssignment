@@ -14,7 +14,7 @@ public interface UsersRepository {
 
 	void delete(Users users);
 
-	void delete(String id);
+	void delete(String username);
 
 	Users findByUsername(String Username);
 
