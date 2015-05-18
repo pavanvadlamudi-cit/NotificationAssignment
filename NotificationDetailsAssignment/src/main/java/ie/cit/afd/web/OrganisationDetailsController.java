@@ -2,9 +2,11 @@ package ie.cit.afd.web;
 
 import ie.cit.afd.dao.OrganisationDetailsRepository;
 import ie.cit.afd.models.OrganisationDetails;
+import ie.cit.afd.models.Users;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -21,7 +23,7 @@ import org.springframework.web.util.UriTemplate;
 @Controller
 public class OrganisationDetailsController {
 	private OrganisationDetailsRepository ordrepo;
-
+	protected static Logger logger = Logger.getLogger("controller");
 	@Autowired
 	public OrganisationDetailsController(OrganisationDetailsRepository ordrepo) {
 		this.ordrepo = ordrepo;
@@ -71,7 +73,29 @@ public class OrganisationDetailsController {
 		return template.expand(organisationDetails.getOrganisationDetailsID(),
 				template).toASCIIString();
 	}
+	
+	@RequestMapping(value = "/organisationdetails/edit/{id}", method = RequestMethod.GET)
+	public String findById(@PathVariable("id") String id, Model model) {
 
+		
+		model.addAttribute("organisationdetails", ordrepo.findById(id));
+
+		return "editorganisationdetails";
+	}
+
+	@RequestMapping(value = "/organisationdetails/save/{id}", method = RequestMethod.POST)
+	public String saveEdit(
+
+	@PathVariable("id") String id, @RequestParam String name, Model model) {
+		logger.debug("**********************save request to show edit page");
+		OrganisationDetails org = ordrepo.findById(id);
+		if (org != null) {
+
+			org.setName(name);
+			ordrepo.update(org);
+		}
+		return "redirect:/Notification/organisationdetails";
+	}
 	// Exception handler for findById if "Todo" item does not exist in repo
 	@ExceptionHandler(IncorrectResultSizeDataAccessException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
