@@ -6,10 +6,12 @@ import ie.cit.afd.models.NotificationTypes;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,7 +33,7 @@ public class NotificationTypesController {
 	public NotificationTypesController(NotificationTypesRepository ntrepo) {
 		this.ntrepo = ntrepo;
 	}
-
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/notificationtypes", "/notificationtypes/all" }, method = RequestMethod.GET)
 	public String getAll(Model model) {
 		model.addAttribute("notificationtypes", ntrepo.getAll());

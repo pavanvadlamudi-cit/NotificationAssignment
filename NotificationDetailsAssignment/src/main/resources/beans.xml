@@ -25,8 +25,15 @@
 	<context:component-scan base-package="ie.cit.afd.dao" />
 	<security:http>
 		<security:csrf disabled="true" />
-		<security:intercept-url pattern="/Notification/**"
+		
+		<security:intercept-url pattern="/Notification/notificationdetails"
 			access="hasRole('USER')" />
+		<security:intercept-url pattern="/Notification/notificationtypes"
+			access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/Notification/organisationdetails"
+			access="hasRole('ADMIN')" />
+			<security:intercept-url pattern="/Notification/users"
+			access="hasRole('ADMIN')" />
 		<security:form-login default-target-url="/Notification/notificationdetails" />
 		<security:http-basic />
 		<security:logout />
