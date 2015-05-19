@@ -2,7 +2,7 @@ package ie.cit.afd.web;
 
 import ie.cit.afd.dao.OrganisationDetailsRepository;
 import ie.cit.afd.models.OrganisationDetails;
-import ie.cit.afd.models.Users;
+
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -106,7 +106,7 @@ public class JdbcUsersRepository implements UsersRepository {
 	}
 
 	public List<UserRoles> getRolesByUsername(String Username) {
-		List<UserRoles> userRolesList = new ArrayList<UserRoles>();
+		
 		String sql = "SELECT username, authority, 1 as user_role_id FROM authorities WHERE  username=?";
 		try {
 			return jdbcTemplate.query(sql, new Object[] { Username },
