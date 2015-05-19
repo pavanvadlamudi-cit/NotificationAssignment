@@ -5,7 +5,7 @@
 <html>
 <head>
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-<title>Notification types</title>
+<title>Users list</title>
 </head>
 <body>
 	<sec:authentication property="principal" var="loginuser" />
@@ -27,13 +27,13 @@
 				<div class="Row">
 					<div class="CellNoBorder">Username:</div>
 					<div class="CellNoBorder">
-						<input name="username" type="text" />
+						<input name="username1" type="text" />
 					</div>
 				</div>
 				<div class="Row">
 					<div class="CellNoBorder">Password:</div>
 					<div class="CellNoBorder">
-						<input name="password" type="password" />
+						<input name="password1" type="password" />
 					</div>
 				</div>
 				<div class="Row">
@@ -53,7 +53,7 @@
 		<div style="display: block; float: left; margin: 5px; padding: 5px;">
 
 			<div class="Container">
-				<h2>Users</h2>
+				<h2>Users list</h2>
 				<div class="Table">
 					<div class="Heading">
 						<div class="Cell">
@@ -68,7 +68,7 @@
 					<c:forEach items="${users}" var="user" varStatus="row">
 						<div class="Row">
 							<div class="Cell">
-								<form method="post" action="${user.username}">
+								<form method="post" action="users/${user.username}">
 									<input name="_method" type="hidden" value="delete" /> <input
 										name="delete" type="submit" value="Delete" />
 								</form>

@@ -1,7 +1,6 @@
 package ie.cit.afd.web;
 
 import ie.cit.afd.dao.UsersRepository;
-import ie.cit.afd.models.NotificationTypes;
 import ie.cit.afd.models.Users;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,16 +35,16 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.POST)
-	public String create(@RequestParam String username,
-			@RequestParam String password) {
+	public String create(@RequestParam String username1,
+			@RequestParam String password1) {
 
 		Users users = new Users();
-		users.setUsername(username);
-		users.setPassword(password);
+		users.setUsername(username1);
+		users.setPassword(password1);
 		users.setEnabled(true);
 
 		usrrepo.insert(users);
-		return "users";
+		return "redirect:users";
 	}
 
 	@RequestMapping(value = "/users/{username}", method = RequestMethod.DELETE)

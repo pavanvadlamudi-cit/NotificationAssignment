@@ -101,7 +101,7 @@
 		</div>
 		<div
 			style="display: block; float: right; margin: 5px; padding: 5px; width: 20%">
-			<c:if test="${user.username=='admin'}">
+			
 				<div class="right-pane-widget--container">
 				<ul style="display: block; list-style: none;">
 					<li><a href="notificationdetails">Notification details</a></li>
@@ -112,7 +112,7 @@
 					</c:if>
 				</ul>
 			</div>
-			</c:if>
+			
 		</div>
 	</div>
 

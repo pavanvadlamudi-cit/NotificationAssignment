@@ -27,31 +27,31 @@ public class JdbcUserRolesRepository implements UserRolesRepository {
 
 	public void insert(UserRoles userroles) {
 		jdbcTemplate.update(
-				"INSERT INTO user_roles(username, role) VALUES (?, ?)",
+				"INSERT INTO authorities(username, authority) VALUES (?, ?)",
 				userroles.getUsername(), userroles.getRole());
 	}
 
 	public void update(UserRoles userroles) {
 		jdbcTemplate
-				.update("UPDATE user_roles SET username=?, role=?, WHERE user_role_id=?",
+				.update("UPDATE authorities SET username=?, authority=? WHERE username=? and authority=?",
 						userroles.getUsername(), userroles.getRole(),
-						userroles.getUser_role_id());
+						userroles.getUsername(), userroles.getRole());
 	}
 
 	public void delete(UserRoles userroles) {
-		jdbcTemplate.update("DELETE FROM user_roles WHERE  user_role_id=?",
-				userroles.getUser_role_id());
+		jdbcTemplate.update("DELETE FROM authorities  WHERE username=? and authority=?",
+				userroles.getUsername(), userroles.getRole());
 
 	}
 
 	public void delete(String username) {
-		jdbcTemplate.update("DELETE FROM user_roles WHERE  username=?",
+		jdbcTemplate.update("DELETE FROM authorities WHERE  username=?",
 				username);
 
 	}
 
 	public List<UserRoles> findByUsername(String Username) {
-		String sql = "SELECT username, role, user_role_id FROM user_roles WHERE  username=?";
+		String sql = "SELECT username, authority, 1 as user_role_id WHERE  username=?";
 		try {
 			return jdbcTemplate.query(sql, new Object[] { Username },
 					new UserRolesSingleRowMapper());
@@ -67,7 +67,7 @@ public class JdbcUserRolesRepository implements UserRolesRepository {
 
 	public List<UserRoles> getAll() {
 		return jdbcTemplate.query(
-				"SELECT username, role, user_role_id FROM user_roles ",
+				"SELECT username, authority, 1 as user_role_id  FROM authorities ",
 				new UserRolesSingleRowMapper());
 
 	}

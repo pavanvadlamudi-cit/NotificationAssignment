@@ -1,6 +1,6 @@
 package ie.cit.afd.dao;
 
-import ie.cit.afd.models.UserDetails;
+
 import ie.cit.afd.models.UserRoles;
 import ie.cit.afd.models.Users;
 
@@ -38,7 +38,7 @@ public class JdbcUsersRepository implements UsersRepository {
 		jdbcTemplate.update("INSERT INTO users("
 				+ "username, password, enabled)  VALUES (?, ?, ?)",
 				users.getUsername(), password, users.isEnabled());
-
+		jdbcTemplate.update("insert into authorities values(?,'ROLE_USER')",users.getUsername());	
 	}
 
 	public void update(Users users) {
@@ -50,8 +50,9 @@ public class JdbcUsersRepository implements UsersRepository {
 	}
 
 	public void delete(String username) {
-		jdbcTemplate.update("delete users where username=?", username);
-
+		jdbcTemplate.update("delete from owners where username=?", username);
+		jdbcTemplate.update("delete from authorities where username=?", username);
+		jdbcTemplate.update("delete from users where username=?", username);
 	}
 
 	@Transactional(readOnly = true)
@@ -78,19 +79,17 @@ public class JdbcUsersRepository implements UsersRepository {
 
 	}
 
-	public UserDetails mapRow(ResultSet rs, int arg1) throws SQLException {
+	public Users mapRow(ResultSet rs, int arg1) throws SQLException {
 
-		String userDetailsID = rs.getString("userdetailsid");
 		String username = rs.getString("username");
-		String organisationDetailsID = rs.getString("organisationdetailsid");
 		String password = rs.getString("password");
-		Boolean status = rs.getBoolean("status");
+		Boolean status = rs.getBoolean("enabled");
 
-		UserDetails userDetails = new UserDetails();
-		userDetails.setUserDetailsID(userDetailsID);
+		Users userDetails = new Users();
+		
 		userDetails.setUsername(username);
-		userDetails.setStatus(status);
-		userDetails.setOrganisationDetailsID(organisationDetailsID);
+		userDetails.setEnabled(status);
+		
 		userDetails.setPassword(password);
 
 		return userDetails;
@@ -108,7 +107,7 @@ public class JdbcUsersRepository implements UsersRepository {
 
 	public List<UserRoles> getRolesByUsername(String Username) {
 		List<UserRoles> userRolesList = new ArrayList<UserRoles>();
-		String sql = "SELECT username, role, user_role_id FROM user_roles WHERE  username=?";
+		String sql = "SELECT username, authority, 1 as user_role_id FROM authorities WHERE  username=?";
 		try {
 			return jdbcTemplate.query(sql, new Object[] { Username },
 					new UserRolesSingleRowMapper());
@@ -119,7 +118,9 @@ public class JdbcUsersRepository implements UsersRepository {
 	}
 
 	public void delete(Users users) {
-		jdbcTemplate.update("delete users where username=?", users.getUsername());
+		jdbcTemplate.update("delete from owners where username=?", users.getUsername());
+		jdbcTemplate.update("delete from authorities where username=?", users.getUsername());
+		jdbcTemplate.update("delete from users where username=?", users.getUsername());
 
 		
 	}

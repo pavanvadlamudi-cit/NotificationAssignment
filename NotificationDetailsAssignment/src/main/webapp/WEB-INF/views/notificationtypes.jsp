@@ -68,7 +68,7 @@
 						<div class="Row">
 							<div class="Cell">
 								<form method="post"
-									action="${notificationtype.notificationTypeID}">
+									action="notificationtypes/${notificationtype.notificationTypeID}">
 									<input name="_method" type="hidden" value="delete" /> <input
 										name="delete" type="submit" value="Delete" />
 								</form>
